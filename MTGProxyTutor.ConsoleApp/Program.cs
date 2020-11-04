@@ -1,11 +1,9 @@
-﻿using MTGProxyTutor.BusinessLogic;
+﻿using MTGProxyTutor.BusinessLogic.Parsers;
+using MTGProxyTutor.BusinessLogic.PDF;
 using MTGProxyTutor.Contracts.Interfaces;
+using MTGProxyTutor.Contracts.Models.App;
 using MTGProxyTutor.DependencyInjection;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Unity;
 
 namespace MTGProxyTutor.ConsoleApp
@@ -15,8 +13,20 @@ namespace MTGProxyTutor.ConsoleApp
 		static void Main(string[] args)
 		{
 			var cardFetcher = DIManager.Container.Resolve<ICardDataFetcher>();
-			var card = cardFetcher.GetCardByName("austere com");
-			Console.ReadKey();
+
+			var fileparser = new FileParser();
+			var cards = fileparser.Parse(@"..\listaCarte.txt");
+			var cardList = new List<CardWrapper>();
+
+			foreach(var cc in cards)
+			{
+				var card = cardFetcher.GetCardByName(cc.CardName);
+				cardList.Add(new CardWrapper(card, cc.Quantity));
+			}
+
+			PDFHelper.SavePDF(cardList, "prova.pdf");
+
+			var a = 1;
 		}
 	}
 }

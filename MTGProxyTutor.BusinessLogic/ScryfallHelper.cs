@@ -1,4 +1,5 @@
 ﻿using MTGProxyTutor.Contracts.Interfaces;
+using MTGProxyTutor.Contracts.Models.App;
 using MTGProxyTutor.Contracts.Models.Scryfall;
 
 namespace MTGProxyTutor.BusinessLogic
@@ -16,10 +17,16 @@ namespace MTGProxyTutor.BusinessLogic
             _logger = logger;
         }
 
-        public ScryfallCard GetCardByName(string name)
+        public Card GetCardByName(string name)
         {
             var correctedName = name.Replace(" ", "+");
-            return _webApiConsumer.Get<ScryfallCard>(string.Format(CARD_BY_NAME_URL, correctedName));
+            var cardDetails = _webApiConsumer.Get<ScryfallCard>(string.Format(CARD_BY_NAME_URL, correctedName));
+            if (cardDetails != null)
+            {
+                var cardImage = _webApiConsumer.GetBinary(cardDetails.Image_uris.Normal);
+                return new Card { Image = cardImage };
+            }
+            return null;
         }
     }
 }

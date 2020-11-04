@@ -8,5 +8,6 @@ namespace MTGProxyTutor.Contracts.Models.App
 {
 	public class Card
 	{
+		public byte[] Image { get; set; }
 	}
 }

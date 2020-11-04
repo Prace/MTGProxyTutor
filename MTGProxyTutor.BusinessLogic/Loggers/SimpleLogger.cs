@@ -1,9 +1,4 @@
 ﻿using MTGProxyTutor.Contracts.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MTGProxyTutor.BusinessLogic.Loggers
 {
@@ -36,19 +31,9 @@ namespace MTGProxyTutor.BusinessLogic.Loggers
             WriteFormattedLog(LogLevel.ERROR, text);
         }
 
-        public void Fatal(string text)
-        {
-            WriteFormattedLog(LogLevel.FATAL, text);
-        }
-
         public void Info(string text)
         {
             WriteFormattedLog(LogLevel.INFO, text);
-        }
-
-        public void Trace(string text)
-        {
-            WriteFormattedLog(LogLevel.TRACE, text);
         }
 
         public void Warning(string text)
@@ -79,9 +64,6 @@ namespace MTGProxyTutor.BusinessLogic.Loggers
             string pretext;
             switch (level)
             {
-                case LogLevel.TRACE:
-                    pretext = System.DateTime.Now.ToString(datetimeFormat) + " [TRACE]   ";
-                    break;
                 case LogLevel.INFO:
                     pretext = System.DateTime.Now.ToString(datetimeFormat) + " [INFO]    ";
                     break;
@@ -94,9 +76,6 @@ namespace MTGProxyTutor.BusinessLogic.Loggers
                 case LogLevel.ERROR:
                     pretext = System.DateTime.Now.ToString(datetimeFormat) + " [ERROR]   ";
                     break;
-                case LogLevel.FATAL:
-                    pretext = System.DateTime.Now.ToString(datetimeFormat) + " [FATAL]   ";
-                    break;
                 default:
                     pretext = "";
                     break;
@@ -108,12 +87,10 @@ namespace MTGProxyTutor.BusinessLogic.Loggers
         [System.Flags]
         private enum LogLevel
         {
-            TRACE,
             INFO,
             DEBUG,
             WARNING,
-            ERROR,
-            FATAL
+            ERROR
         }
     }
 }

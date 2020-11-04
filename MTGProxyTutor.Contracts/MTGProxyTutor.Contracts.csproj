@@ -45,6 +45,7 @@
     <Compile Include="Interfaces\ILogger.cs" />
     <Compile Include="Interfaces\IWebApiConsumer.cs" />
     <Compile Include="Models\App\Card.cs" />
+    <Compile Include="Models\App\CardWrapper.cs" />
     <Compile Include="Models\Scryfall\ScryfallCard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
