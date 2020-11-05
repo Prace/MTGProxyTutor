@@ -3,7 +3,6 @@ using PdfSharp;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using System.Collections.Generic;
-using System.IO;
 
 namespace MTGProxyTutor.BusinessLogic.PDF
 {
@@ -17,7 +16,7 @@ namespace MTGProxyTutor.BusinessLogic.PDF
 		const int marginLeft = 60;
 		const int marginRight = 10;
 
-		public static void SavePDF(List<CardWrapper> cards, string filename)
+		public static void SavePDF(IEnumerable<CardWrapper> cardWrappers, string filename)
 		{
 			var doc = new PdfDocument();
 			PdfPage page;
@@ -27,9 +26,9 @@ namespace MTGProxyTutor.BusinessLogic.PDF
 			var rowNum = 0;
 			var pageNum = -1;
 
-			foreach (var card in cards)
+			foreach (var cardWrapper in cardWrappers)
 			{
-				for (int i = 0; i < card.Quantity; i++)
+				for (int i = 0; i < cardWrapper.Quantity; i++)
 				{
 					colNum++;
 					if (colNum == 3)
@@ -55,7 +54,7 @@ namespace MTGProxyTutor.BusinessLogic.PDF
 					}
 
 					var rect = new XRect(colNum * PDFCardWidth, rowNum * PDFCardHeight, PDFCardWidth, PDFCardHeight);
-					var image = XImage.FromStream(new MemoryStream(card.Card.Image));
+					var image = XImage.FromStream(cardWrapper.Image.GetStream());
 					xgr.DrawImage(image, rect);
 				}
 			}

@@ -16,5 +16,20 @@ namespace MTGProxyTutor
 		{
 			InitializeComponent();
 		}
+
+		private void button1_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void progressBar1_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void ExportToPDFBtn_Click(object sender, EventArgs e)
+		{
+
+		}
 	}
 }

@@ -1,14 +1,9 @@
 ﻿using AutoMapper;
-using MTGProxyTutor.BusinessLogic;
 using MTGProxyTutor.BusinessLogic.Http;
 using MTGProxyTutor.BusinessLogic.Loggers;
+using MTGProxyTutor.BusinessLogic.Scryfall;
 using MTGProxyTutor.Contracts.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using Unity;
 using Unity.Injection;
 using Unity.Lifetime;
@@ -39,8 +34,10 @@ namespace MTGProxyTutor.DependencyInjection
             container.RegisterType<HttpClient>(new ContainerControlledLifetimeManager());
             container.RegisterType<ILogger, SimpleLogger>(new ContainerControlledLifetimeManager());
             container.RegisterInstance<IMapper>(Mapper.Configuration, new ContainerControlledLifetimeManager());
-            container.RegisterType<IWebApiConsumer, WebApiConsumer>(new InjectionConstructor(container.Resolve<HttpClient>(), container.Resolve<ILogger>()));
-            container.RegisterType<ICardDataFetcher, ScryfallFetcher>(new InjectionConstructor(container.Resolve<IWebApiConsumer>(), container.Resolve<ILogger>()));
+            container.RegisterType<IWebApiConsumer, WebApiConsumer>(
+                new InjectionConstructor(container.Resolve<HttpClient>(), container.Resolve<ILogger>()));
+            container.RegisterType<ICardDataFetcher, ScryfallFetcher>(
+                new InjectionConstructor(container.Resolve<IWebApiConsumer>(), container.Resolve<ILogger>(), container.Resolve<IMapper>()));
 
             return container;
         }

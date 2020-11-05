@@ -19,7 +19,12 @@ namespace MTGProxyTutor.DependencyInjection
 				{
 					#region Scryfall
 
-					cfg.CreateMap<ScryfallCard, Card>();
+					cfg.CreateMap<ScryfallCard, Card>()
+						.ForMember(dest => dest.CardName, src => src.MapFrom(s => s.Name))
+						.ForMember(dest => dest.ManaCost, src => src.MapFrom(s => s.Mana_cost))
+						.ForMember(dest => dest.Type, src => src.MapFrom(s => s.Type_line))
+						.ForMember(dest => dest.Text, src => src.MapFrom(s => s.Oracle_text))
+						.ForMember(dest => dest.ImageUrl, src => src.MapFrom(s => s.Image_uris.Normal));
 
 					#endregion
 				});

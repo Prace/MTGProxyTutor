@@ -9,15 +9,16 @@ namespace MTGProxyTutor.BusinessLogic.Parsers
 {
 	public abstract class BaseParser
 	{
-		protected Regex lineParseRegex = new Regex(@"\s*(\d+)\s*[xX]?\s+(.+)");
+		protected Regex lineWithQtyParseRegex = new Regex(@"\s*(\d+)\s*[xX]?\s+(.+)");
 
 		protected ParsedCard ParseSingleLine(string line)
 		{
-			var match = lineParseRegex.Match(line);
-			if (match.Success)
-				return new ParsedCard(Int32.Parse(match.Groups[1].Value), match.Groups[2].Value);
+			var lineWithQtyMatch = lineWithQtyParseRegex.Match(line);
+
+			if (lineWithQtyMatch.Success)
+				return new ParsedCard(Int32.Parse(lineWithQtyMatch.Groups[1].Value), lineWithQtyMatch.Groups[2].Value);
 			else
-				return null;
+				return new ParsedCard(1, line.Trim());
 		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using MTGProxyTutor.Contracts.Interfaces;
+﻿using MTGProxyTutor.Contracts.Exceptions;
+using MTGProxyTutor.Contracts.Interfaces;
 using Newtonsoft.Json;
 using System;
 using System.Net.Http;
@@ -23,6 +24,8 @@ namespace MTGProxyTutor.BusinessLogic.Http
 
 		public async Task<T> GetAsync<T>(string url, bool useCache = true) where T: class
 		{
+			HttpResponseMessage response = null;
+
 			try
 			{
 				if (useCache)
@@ -32,7 +35,7 @@ namespace MTGProxyTutor.BusinessLogic.Http
 						return cachedValue;
 				}
 
-				var response = await _client.GetAsync(url);
+				response = await _client.GetAsync(url);
 				response.EnsureSuccessStatusCode();
 				var body = await response.Content.ReadAsStringAsync();
 				T result = JsonConvert.DeserializeObject<T>(body);
@@ -45,7 +48,7 @@ namespace MTGProxyTutor.BusinessLogic.Http
 			catch (Exception ex)
 			{
 				_logger.Error($"GET Error: {ex.Message}");
-				throw;
+				throw new WebApiConsumerException($"GET Error - {ex.Message}", ex, response?.StatusCode);
 			}
 		}
 
@@ -58,6 +61,8 @@ namespace MTGProxyTutor.BusinessLogic.Http
 
 		public async Task<byte[]> GetBinaryAsync(string url, bool useCache = true)
 		{
+			HttpResponseMessage response = null;
+
 			try
 			{
 				if (useCache)
@@ -67,7 +72,7 @@ namespace MTGProxyTutor.BusinessLogic.Http
 						return cachedValue;
 				}
 
-				var response = await _client.GetAsync(url);
+				response = await _client.GetAsync(url);
 				response.EnsureSuccessStatusCode();
 				var binary = await response.Content.ReadAsByteArrayAsync();
 
@@ -79,7 +84,7 @@ namespace MTGProxyTutor.BusinessLogic.Http
 			catch (Exception ex)
 			{
 				_logger.Error($"GET Error: {ex.Message}");
-				throw;
+				throw new WebApiConsumerException($"GET Error - {ex.Message}", ex, response?.StatusCode);
 			}
 		}
 
@@ -89,7 +94,6 @@ namespace MTGProxyTutor.BusinessLogic.Http
 			task.Wait();
 			return task.Result;
 		}
-
 
 		private T getFromCache<T>(string key) where T : class
 		{

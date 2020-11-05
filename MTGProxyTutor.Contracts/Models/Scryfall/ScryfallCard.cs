@@ -101,6 +101,8 @@ namespace MTGProxyTutor.Contracts.Models.Scryfall
         public bool Booster { get; set; }
         public bool Story_spotlight { get; set; }
         public int Edhrec_rank { get; set; }
+        public string Power { get; set; }
+        public string Toughness { get; set; }
         public Prices Prices { get; set; }
     }
 }

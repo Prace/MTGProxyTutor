@@ -10,5 +10,6 @@
 
 		public Card Card { get; set; }
 		public int Quantity { get; set; }
+		public CardImage Image { get; set; }
 	}
 }
