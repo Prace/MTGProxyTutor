@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using MTGProxyTutor.Contracts.Models.App;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 

@@ -48,6 +48,7 @@
     <Compile Include="Models\App\Card.cs" />
     <Compile Include="Models\App\CardImage.cs" />
     <Compile Include="Models\App\CardWrapper.cs" />
+    <Compile Include="Models\App\ParsedCard.cs" />
     <Compile Include="Models\Scryfall\ScryfallCard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

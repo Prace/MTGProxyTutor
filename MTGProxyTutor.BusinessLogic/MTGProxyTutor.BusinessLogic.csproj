@@ -60,7 +60,7 @@
     <Compile Include="Loggers\SimpleLogger.cs" />
     <Compile Include="Parsers\BaseParser.cs" />
     <Compile Include="Parsers\FileParser.cs" />
-    <Compile Include="Parsers\ParsedCard.cs" />
+    <Compile Include="Parsers\MultiLineStringParser.cs" />
     <Compile Include="PDF\PDFHelper.cs" />
     <Compile Include="Scryfall\ScryfallHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

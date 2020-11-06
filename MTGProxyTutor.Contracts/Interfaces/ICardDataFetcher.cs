@@ -1,10 +1,11 @@
 ﻿using MTGProxyTutor.Contracts.Models.App;
+using System.Threading.Tasks;
 
 namespace MTGProxyTutor.Contracts.Interfaces
 {
 	public interface ICardDataFetcher
 	{
-		Card GetCardByName(string name);
-		CardImage GetCardImageByUrl(string url);
+		Task<Card> GetCardByNameAsync(string name);
+		Task<CardImage> GetCardImageByUrlAsync(string url);
 	}
 }

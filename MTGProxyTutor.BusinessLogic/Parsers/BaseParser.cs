@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MTGProxyTutor.Contracts.Models.App;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,8 +18,10 @@ namespace MTGProxyTutor.BusinessLogic.Parsers
 
 			if (lineWithQtyMatch.Success)
 				return new ParsedCard(Int32.Parse(lineWithQtyMatch.Groups[1].Value), lineWithQtyMatch.Groups[2].Value);
-			else
+			else if (!string.IsNullOrWhiteSpace(line))
 				return new ParsedCard(1, line.Trim());
+			else
+				return null;
 		}
 	}
 }

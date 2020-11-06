@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MTGProxyTutor.BusinessLogic.Parsers
+namespace MTGProxyTutor.Contracts.Models.App
 {
 	public class ParsedCard
 	{

@@ -1,19 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MTGProxyTutor.Contracts.Models.App
 {
 	public class CardImage
 	{
-		private byte[] _binary;
+		private readonly byte[] _binary;
 
 		public CardImage(byte[] binary)
 		{
 			_binary = binary;
+		}
+
+		public CardImage(string base64str)
+		{
+			_binary = Convert.FromBase64String(base64str);
 		}
 
 		public MemoryStream GetStream()
