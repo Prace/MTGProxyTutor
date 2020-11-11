@@ -13,8 +13,7 @@ namespace MTGProxyTutor.ConsoleApp
 	{
 		static void Main(string[] args)
 		{
-			var cardFetcher = DIManager.Container.Resolve<ICardDataFetcher>();
-			var card = cardFetcher.GetCardByNameAsync("mox rub").Result;
+			// Sandbox Console App
 		}
 	}
 }

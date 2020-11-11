@@ -1,11 +1,7 @@
 ﻿using AutoMapper;
-using MTGProxyTutor.Contracts.Exceptions;
 using MTGProxyTutor.Contracts.Interfaces;
 using MTGProxyTutor.Contracts.Models.App;
 using MTGProxyTutor.Contracts.Models.Scryfall;
-using System;
-using System.Net;
-using System.Runtime.Remoting.Contexts;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 

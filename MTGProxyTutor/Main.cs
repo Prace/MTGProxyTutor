@@ -11,20 +11,21 @@ using Unity;
 
 namespace MTGProxyTutor
 {
-	public partial class Form1 : Form
+	public partial class Main : Form
 	{
 		private readonly ICardDataFetcher _cardDataFetcher;
 		private readonly MultiLineStringParser _parser;
 		private readonly ILogger _logger;
 		private List<CardWrapper> _cards;
 
-		public Form1()
+		public Main()
 		{
 			InitializeComponent();
 			_cardDataFetcher = DIManager.Container.Resolve<ICardDataFetcher>();
 			_parser = DIManager.Container.Resolve<MultiLineStringParser>();
 			_logger = DIManager.Container.Resolve<ILogger>();
 			_cards = new List<CardWrapper>();
+
 		}
 
 		private async void searchCardsBtn_Click(object sender, EventArgs e)
@@ -42,10 +43,16 @@ namespace MTGProxyTutor
 
 					if (failed.Any())
 					{
-						// Alert User 
+						var failedParseAlertForm = new FailedAlert(failed
+							.Select(f => new Tuple<string, Exception>(f, new Exception("Failed parse"))));
+						failedParseAlertForm.ShowDialog();
 					}
 
-					List<ParsedCard> failedCardFetches = new List<ParsedCard>();
+					List<Tuple<string, Exception>> failedCardFetches = new List<Tuple<string, Exception>>();
+
+					this.progressBar1.Maximum = parsedCards.Count;
+					this.progressBar1.Step = 1;
+					this.progressBar1.Value = 0;
 
 					foreach (var pc in parsedCards)
 					{
@@ -63,13 +70,19 @@ namespace MTGProxyTutor
 						}
 						catch (Exception ex)
 						{
-							failedCardFetches.Add(pc);
+							failedCardFetches.Add(new Tuple<string, Exception>(pc.CardName, ex));
+						}
+						finally
+						{
+							this.progressBar1.PerformStep();
 						}
 					}
 
+
 					if (failedCardFetches.Any())
 					{
-						// Alert user
+						var failedCardsAlertForm = new FailedAlert(failedCardFetches);
+						failedCardsAlertForm.ShowDialog();
 					}
 				}
 			}
@@ -84,20 +97,28 @@ namespace MTGProxyTutor
 
 		private async void exportToPDFBtn_Click(object sender, EventArgs e)
 		{
-			try
-			{
-				this.exportToPDFBtn.Enabled = false;
+			SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+			saveFileDialog1.Filter = "PDF|*.pdf";
+			saveFileDialog1.Title = "Save PDF";
+			saveFileDialog1.ShowDialog();
 
-				foreach (var c in _cards)
+			if (saveFileDialog1.FileName != "")
+			{
+				try
 				{
-					c.Image = await _cardDataFetcher.GetCardImageByUrlAsync(c.Card.ImageUrl);
-				}
+					this.exportToPDFBtn.Enabled = false;
 
-				PDFHelper.SavePDF(_cards, "prova.pdf");
-			}
-			catch (Exception ex)
-			{
-				_logger.Info($"Get cards images error: {ex.Message}");
+					foreach (var c in _cards)
+					{
+						c.Image = await _cardDataFetcher.GetCardImageByUrlAsync(c.Card.ImageUrl);
+					}
+
+					PDFHelper.SavePDF(_cards, saveFileDialog1.FileName);
+				}
+				catch (Exception ex)
+				{
+					_logger.Info($"Get cards images error: {ex.Message}");
+				}
 			}
 
 			this.exportToPDFBtn.Enabled = true;
