@@ -26,7 +26,6 @@ namespace MTGProxyTutor.BusinessLogic.Scryfall
         {
             string correctedName = sanitize(name);
             var cardDetails = await _webApiConsumer.GetAsync<ScryfallCard>(string.Format(CARD_BY_NAME_URL, correctedName));
-            await Task.Delay(100); // Wait at least 100ms between searches on Scryfall APIs
             if (cardDetails != null)
                 return _mapper.Map<Card>(cardDetails);
             return null;
@@ -34,8 +33,10 @@ namespace MTGProxyTutor.BusinessLogic.Scryfall
 
         public async Task<CardImage> GetCardImageByUrlAsync(string url)
         {
+            if (url == null)
+                return null;
+            
             var binary = await _webApiConsumer.GetBinaryAsync(url);
-            await Task.Delay(100); // Wait at least 100ms between searches on Scryfall APIs
             if (binary != null)
                 return new CardImage(binary);
             return null;

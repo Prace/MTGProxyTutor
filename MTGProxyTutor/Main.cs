@@ -6,6 +6,7 @@ using MTGProxyTutor.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Unity;
 
@@ -110,7 +111,14 @@ namespace MTGProxyTutor
 
 					foreach (var c in _cards)
 					{
-						c.Image = await _cardDataFetcher.GetCardImageByUrlAsync(c.Card.ImageUrl);
+						c.Images = new List<CardImage>();
+
+						foreach (var ci in c.Card.ImageUrls)
+                        {
+							await Task.Delay(100);
+							var image = await _cardDataFetcher.GetCardImageByUrlAsync(ci);
+							c.Images.Add(image);
+                        }
 					}
 
 					PDFHelper.SavePDF(_cards, saveFileDialog1.FileName);

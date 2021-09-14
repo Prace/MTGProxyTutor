@@ -24,13 +24,23 @@ namespace MTGProxyTutor.DependencyInjection
 						.ForMember(dest => dest.ManaCost, src => src.MapFrom(s => s.Mana_cost))
 						.ForMember(dest => dest.Type, src => src.MapFrom(s => s.Type_line))
 						.ForMember(dest => dest.Text, src => src.MapFrom(s => s.Oracle_text))
-						.ForMember(dest => dest.ImageUrl, src => src.MapFrom(s => s.Image_uris.Normal));
+						.ForMember(dest => dest.ImageUrls, src => src.MapFrom(s => convertScryfallImages(s)));
 
 					#endregion
 				});
 
 				return config.CreateMapper();
 			}
+		}
+
+		private static List<string> convertScryfallImages(ScryfallCard card) 
+		{
+			if (card.Image_uris == null)
+			{
+				return card.Card_faces == null ? new List<string> { }
+					: card.Card_faces.Select(cf => cf.Image_uris.Normal).ToList();
+			}
+			return new List<string> { card.Image_uris.Normal };
 		}
 	}
 }

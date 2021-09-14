@@ -15,6 +15,6 @@ namespace MTGProxyTutor.Contracts.Models.App
 		public string Rarity { get; set; }
 		public string Power { get; set; }
 		public string Toughness { get; set; }
-		public string ImageUrl { get; set; }
+		public List<string> ImageUrls { get; set; }
 	}
 }

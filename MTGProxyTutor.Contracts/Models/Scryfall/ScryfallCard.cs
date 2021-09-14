@@ -49,26 +49,39 @@ namespace MTGProxyTutor.Contracts.Models.Scryfall
         public string Tix { get; set; }
     }
 
-    public class ScryfallCard
+    public abstract class BaseCard
+    {
+        public string Name { get; set; }
+        public string Mana_cost { get; set; }
+        public string Type_line { get; set; }
+        public string Oracle_text { get; set; }
+        public List<string> Colors { get; set; }
+        public string Artist { get; set; }
+        public string Illustration_id { get; set; }
+        public ImageUris Image_uris { get; set; }
+    }
+
+    public class CardFace : BaseCard
+    {
+        public string Object { get; set; }
+        public string Artist_id { get; set; }
+    }
+
+    public class ScryfallCard : BaseCard
     {
         public string Id { get; set; }
         public string Oracle_id { get; set; }
         public List<string> Multiverse_ids { get; set; }
         public int Tcgplayer_id { get; set; }
         public int Cardmarket_id { get; set; }
-        public string Name { get; set; }
         public string Lang { get; set; }
         public string Released_at { get; set; }
         public string Uri { get; set; }
         public string Scryfall_uri { get; set; }
         public string Layout { get; set; }
         public bool Highres_image { get; set; }
-        public ImageUris Image_uris { get; set; }
-        public string Mana_cost { get; set; }
+        public List<CardFace> Card_faces { get; set; }
         public double Cmc { get; set; }
-        public string Type_line { get; set; }
-        public string Oracle_text { get; set; }
-        public List<string> Colors { get; set; }
         public List<string> Color_identity { get; set; }
         public List<string> Keywords { get; set; }
         public Legalities Legalities { get; set; }
@@ -91,9 +104,7 @@ namespace MTGProxyTutor.Contracts.Models.Scryfall
         public bool Digital { get; set; }
         public string Rarity { get; set; }
         public string Card_back_id { get; set; }
-        public string Artist { get; set; }
         public List<string> Artist_ids { get; set; }
-        public string Illustration_id { get; set; }
         public string Border_color { get; set; }
         public string Frame { get; set; }
         public bool Full_art { get; set; }

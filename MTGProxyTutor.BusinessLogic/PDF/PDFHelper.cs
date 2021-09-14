@@ -3,6 +3,7 @@ using PdfSharp;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace MTGProxyTutor.BusinessLogic.PDF
 {
@@ -19,48 +20,72 @@ namespace MTGProxyTutor.BusinessLogic.PDF
 		public static void SavePDF(IEnumerable<CardWrapper> cardWrappers, string filename)
 		{
 			var doc = new PdfDocument();
-			PdfPage page;
-			XGraphics xgr = null;
-
-			var colNum = -1;
-			var rowNum = 0;
-			var pageNum = -1;
+			addPageToPDF(doc);
+			var currCoordinate = new PDFCoordinate();
 
 			foreach (var cardWrapper in cardWrappers)
 			{
 				for (int i = 0; i < cardWrapper.Quantity; i++)
 				{
-					colNum++;
-					if (colNum == 3)
-					{
-						colNum = 0;
-						rowNum++;
+					foreach(var image in cardWrapper.Images)
+                    {
+						using (var xgr = XGraphics.FromPdfPage(doc.Pages[currCoordinate.PageNumber]))
+                        {
+							var rect = new XRect(currCoordinate.ColNumber * PDFCardWidth, currCoordinate.RowNumber * PDFCardHeight, PDFCardWidth, PDFCardHeight);
+							var imageToPDF = XImage.FromStream(image.GetStream());
+							xgr.DrawImage(imageToPDF, rect);
+							currCoordinate = calculateNextCoordinate(doc, currCoordinate);
+						}
 					}
-
-					if (rowNum == 3 || pageNum == -1)
-					{
-						rowNum = 0;
-						pageNum++;
-						page = doc.AddPage();
-						var size = PageSizeConverter.ToSize(PageSize.A4);
-						page.Width = size.Width;
-						page.Height = size.Height;
-						page.Orientation = PageOrientation.Portrait;
-						page.TrimMargins.Top = marginTop;
-						page.TrimMargins.Right = marginRight;
-						page.TrimMargins.Bottom = marginBottom;
-						page.TrimMargins.Left = marginLeft;
-						xgr = XGraphics.FromPdfPage(doc.Pages[pageNum]);
-					}
-
-					var rect = new XRect(colNum * PDFCardWidth, rowNum * PDFCardHeight, PDFCardWidth, PDFCardHeight);
-					var image = XImage.FromStream(cardWrapper.Image.GetStream());
-					xgr.DrawImage(image, rect);
 				}
 			}
 
 			doc.Save(filename);
 			doc.Close();
+		}
+
+		private static void addPageToPDF(PdfDocument doc)
+		{
+			PdfPage page = doc.AddPage();
+			var size = PageSizeConverter.ToSize(PageSize.A4);
+			page.Width = size.Width;
+			page.Height = size.Height;
+			page.Orientation = PageOrientation.Portrait;
+			page.TrimMargins.Top = marginTop;
+			page.TrimMargins.Right = marginRight;
+			page.TrimMargins.Bottom = marginBottom;
+			page.TrimMargins.Left = marginLeft;
+		}
+
+		private static PDFCoordinate addPageToPDF(PdfDocument doc, PDFCoordinate currentCoordinate)
+		{
+			addPageToPDF(doc);
+			return new PDFCoordinate(currentCoordinate.PageNumber + 1, 0, 0);
+		}
+
+		private static PDFCoordinate calculateNextCoordinate(PdfDocument doc, PDFCoordinate currentCoordinate)
+		{
+			var nextCoord = new PDFCoordinate();
+
+			nextCoord.PageNumber = currentCoordinate.PageNumber;
+			nextCoord.ColNumber = currentCoordinate.ColNumber + 1;
+
+			if (nextCoord.ColNumber == 3)
+			{
+				nextCoord.ColNumber = 0;
+				nextCoord.RowNumber = currentCoordinate.RowNumber + 1;
+			}
+            else
+            {
+				nextCoord.RowNumber = currentCoordinate.RowNumber;
+			}
+
+			if (nextCoord.RowNumber == 3)
+			{
+				return addPageToPDF(doc, currentCoordinate);
+			}
+			
+			return nextCoord;
 		}
 	}
 }
