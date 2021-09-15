@@ -18,6 +18,7 @@ namespace MTGProxyTutor
 		private readonly MultiLineStringParser _parser;
 		private readonly ILogger _logger;
 		private List<CardWrapper> _cards;
+		private const int _apiCallWaitingTimeMs = 100;
 
 		public Main()
 		{
@@ -59,6 +60,7 @@ namespace MTGProxyTutor
 					{
 						try
 						{
+							await Task.Delay(_apiCallWaitingTimeMs);
 							var cardData = await _cardDataFetcher.GetCardByNameAsync(pc.CardName);
 							var cardWrapper = new CardWrapper
 							{
@@ -115,7 +117,7 @@ namespace MTGProxyTutor
 
 						foreach (var ci in c.Card.ImageUrls)
                         {
-							await Task.Delay(100);
+							await Task.Delay(_apiCallWaitingTimeMs);
 							var image = await _cardDataFetcher.GetCardImageByUrlAsync(ci);
 							c.Images.Add(image);
                         }

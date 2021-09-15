@@ -3,7 +3,6 @@ using PdfSharp;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 
 namespace MTGProxyTutor.BusinessLogic.PDF
 {
@@ -65,24 +64,18 @@ namespace MTGProxyTutor.BusinessLogic.PDF
 
 		private static PDFCoordinate calculateNextCoordinate(PdfDocument doc, PDFCoordinate currentCoordinate)
 		{
-			var nextCoord = new PDFCoordinate();
-
-			nextCoord.PageNumber = currentCoordinate.PageNumber;
-			nextCoord.ColNumber = currentCoordinate.ColNumber + 1;
+			var nextCoord = currentCoordinate.Clone();
+			nextCoord.ColNumber++;
 
 			if (nextCoord.ColNumber == 3)
 			{
 				nextCoord.ColNumber = 0;
-				nextCoord.RowNumber = currentCoordinate.RowNumber + 1;
-			}
-            else
-            {
-				nextCoord.RowNumber = currentCoordinate.RowNumber;
+				nextCoord.RowNumber++;
 			}
 
 			if (nextCoord.RowNumber == 3)
 			{
-				return addPageToPDF(doc, currentCoordinate);
+				return addPageToPDF(doc, nextCoord);
 			}
 			
 			return nextCoord;

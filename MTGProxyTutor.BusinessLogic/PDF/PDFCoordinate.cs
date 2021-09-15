@@ -17,5 +17,10 @@ namespace MTGProxyTutor.BusinessLogic.PDF
         public int PageNumber { get; set; }
         public int RowNumber { get; set; }
         public int ColNumber { get; set; }
+
+        public PDFCoordinate Clone()
+        {
+            return new PDFCoordinate(PageNumber, RowNumber, ColNumber);
+        }
     }
 }

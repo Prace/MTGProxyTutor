@@ -1,14 +1,10 @@
 ﻿using MTGProxyTutor.Contracts.Models.App;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MTGProxyTutor.BusinessLogic.Parsers
 {
-	public class MultiLineStringParser : BaseParser
+    public class MultiLineStringParser : BaseParser
 	{
 		List<string> _failedParse;
 
