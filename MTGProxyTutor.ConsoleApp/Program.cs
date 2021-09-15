@@ -1,19 +1,19 @@
-﻿using MTGProxyTutor.BusinessLogic.Parsers;
-using MTGProxyTutor.BusinessLogic.PDF;
-using MTGProxyTutor.Contracts.Interfaces;
-using MTGProxyTutor.Contracts.Models.App;
-using MTGProxyTutor.Contracts.Models.Scryfall;
+﻿using MTGProxyTutor.Contracts.Interfaces;
 using MTGProxyTutor.DependencyInjection;
-using System.Collections.Generic;
+using System;
 using Unity;
 
 namespace MTGProxyTutor.ConsoleApp
 {
-	class Program
+    class Program
 	{
 		static void Main(string[] args)
 		{
-			// Sandbox Console App
+			// Sandbox Console App - Simple Example
+
+			var fetcher = DIManager.Container.Resolve<ICardDataFetcher>();
+			var card = fetcher.GetCardByNameAsync("command tower").Result;
+			Console.ReadKey();
 		}
 	}
 }

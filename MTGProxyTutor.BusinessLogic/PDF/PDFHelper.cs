@@ -8,9 +8,9 @@ namespace MTGProxyTutor.BusinessLogic.PDF
 {
 	public static class PDFHelper
 	{
-		const double mult = 0.8;
-		const int PDFCardWidth = (int)(223 * mult);
-		const int PDFCardHeight = (int)(310 * mult);
+		const double resizer = 0.8;
+		const int PDFCardWidth = (int)(223 * resizer);
+		const int PDFCardHeight = (int)(310 * resizer);
 		const int marginTop = 60;
 		const int marginBottom = 10;
 		const int marginLeft = 60;

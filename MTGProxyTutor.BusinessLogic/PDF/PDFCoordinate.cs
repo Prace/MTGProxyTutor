@@ -1,6 +1,4 @@
-﻿using PdfSharp.Pdf.Content.Objects;
-
-namespace MTGProxyTutor.BusinessLogic.PDF
+﻿namespace MTGProxyTutor.BusinessLogic.PDF
 {
     internal class PDFCoordinate
     {

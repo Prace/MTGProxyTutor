@@ -1,14 +1,10 @@
 ﻿using MTGProxyTutor.Contracts.Models.App;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace MTGProxyTutor.BusinessLogic.Parsers
 {
-	public abstract class BaseParser
+    public abstract class BaseParser
 	{
 		protected Regex lineWithQtyParseRegex = new Regex(@"\s*(\d+)\s*[xX]?\s+(.+)");
 

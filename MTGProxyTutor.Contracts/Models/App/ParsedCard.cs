@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MTGProxyTutor.Contracts.Models.App
+﻿namespace MTGProxyTutor.Contracts.Models.App
 {
-	public class ParsedCard
+    public class ParsedCard
 	{
 		public ParsedCard(int quantity, string cardName)
 		{

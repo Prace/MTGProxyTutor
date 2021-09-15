@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MTGProxyTutor.Contracts.Interfaces
+﻿namespace MTGProxyTutor.Contracts.Interfaces
 {
-	public interface ILogger
+    public interface ILogger
 	{
         void Debug(string text);
         void Error(string text);

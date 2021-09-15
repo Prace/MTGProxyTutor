@@ -6,7 +6,6 @@ using MTGProxyTutor.BusinessLogic.Scryfall;
 using MTGProxyTutor.Contracts.Interfaces;
 using System.Net.Http;
 using Unity;
-using Unity.Injection;
 using Unity.Lifetime;
 
 namespace MTGProxyTutor.DependencyInjection
@@ -36,10 +35,8 @@ namespace MTGProxyTutor.DependencyInjection
             container.RegisterType<ILogger, SimpleLogger>(new ContainerControlledLifetimeManager());
             container.RegisterInstance<IMapper>(Mapper.Configuration, new ContainerControlledLifetimeManager());
             container.RegisterType<MultiLineStringParser>();
-            container.RegisterType<IWebApiConsumer, WebApiConsumer>(
-                new InjectionConstructor(container.Resolve<HttpClient>(), container.Resolve<ILogger>()));
-            container.RegisterType<ICardDataFetcher, ScryfallFetcher>(
-                new InjectionConstructor(container.Resolve<IWebApiConsumer>(), container.Resolve<ILogger>(), container.Resolve<IMapper>()));
+            container.RegisterType<IWebApiConsumer, WebApiConsumer>();
+            container.RegisterType<ICardDataFetcher, ScryfallFetcher>();
 
             return container;
         }
