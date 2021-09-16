@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using MTGProxyTutor.Contracts.Interfaces;
 using MTGProxyTutor.Contracts.Models.App;
-using MTGProxyTutor.Contracts.Models.Scryfall;
+using MTGProxyTutor.Scryfall.Models;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace MTGProxyTutor.BusinessLogic.Scryfall
+namespace MTGProxyTutor.Scryfall.Logic
 {
     public class ScryfallFetcher : ICardDataFetcher
     {

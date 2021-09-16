@@ -63,7 +63,6 @@
     <Compile Include="Parsers\MultiLineStringParser.cs" />
     <Compile Include="PDF\PDFCoordinate.cs" />
     <Compile Include="PDF\PDFHelper.cs" />
-    <Compile Include="Scryfall\ScryfallHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

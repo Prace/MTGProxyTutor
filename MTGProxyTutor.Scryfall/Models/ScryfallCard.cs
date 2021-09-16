@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MTGProxyTutor.Contracts.Models.Scryfall
+namespace MTGProxyTutor.Scryfall.Models
 {
     public class ImageUris
     {

@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MTGProxyTutor.BusinessLogic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MTGProxyTutor.DependencyInjection", "MTGProxyTutor.DependencyInjection\MTGProxyTutor.DependencyInjection.csproj", "{F89DE8F3-4CEE-4354-922A-840E736659FE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MTGProxyTutor.Scryfall", "MTGProxyTutor.Scryfall\MTGProxyTutor.Scryfall.csproj", "{5C22410A-8862-4BA4-92F3-3B21C6C63206}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MTGProxyTutor.MtGIO", "MTGProxyTutor.MtGIO\MTGProxyTutor.MtGIO.csproj", "{24D3F6E4-36AC-414B-BC51-08731602A6F2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{F89DE8F3-4CEE-4354-922A-840E736659FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F89DE8F3-4CEE-4354-922A-840E736659FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F89DE8F3-4CEE-4354-922A-840E736659FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C22410A-8862-4BA4-92F3-3B21C6C63206}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C22410A-8862-4BA4-92F3-3B21C6C63206}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C22410A-8862-4BA4-92F3-3B21C6C63206}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C22410A-8862-4BA4-92F3-3B21C6C63206}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24D3F6E4-36AC-414B-BC51-08731602A6F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24D3F6E4-36AC-414B-BC51-08731602A6F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24D3F6E4-36AC-414B-BC51-08731602A6F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24D3F6E4-36AC-414B-BC51-08731602A6F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

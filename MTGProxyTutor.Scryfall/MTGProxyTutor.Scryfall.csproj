@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D2B76775-CBB5-4C7C-874B-8EAF47B6EFAF}</ProjectGuid>
+    <ProjectGuid>{5C22410A-8862-4BA4-92F3-3B21C6C63206}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MTGProxyTutor.Contracts</RootNamespace>
-    <AssemblyName>MTGProxyTutor.Contracts</AssemblyName>
+    <RootNamespace>MTGProxyTutor.Scryfall</RootNamespace>
+    <AssemblyName>MTGProxyTutor.Scryfall</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,16 +44,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Exceptions\WebApiConsumerException.cs" />
-    <Compile Include="Interfaces\ICardDataFetcher.cs" />
-    <Compile Include="Interfaces\ILogger.cs" />
-    <Compile Include="Interfaces\IWebApiConsumer.cs" />
-    <Compile Include="Models\App\Card.cs" />
-    <Compile Include="Models\App\CardImage.cs" />
-    <Compile Include="Models\App\CardWrapper.cs" />
-    <Compile Include="Models\App\ParsedCard.cs" />
+    <Compile Include="Logic\ScryfallFetcher.cs" />
+    <Compile Include="Models\ScryfallCard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\MTGProxyTutor.Contracts\MTGProxyTutor.Contracts.csproj">
+      <Project>{D2B76775-CBB5-4C7C-874B-8EAF47B6EFAF}</Project>
+      <Name>MTGProxyTutor.Contracts</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
