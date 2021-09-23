@@ -1,5 +1,4 @@
 ﻿using MTGProxyTutor.BusinessLogic.Parsers;
-using MTGProxyTutor.BusinessLogic.PDF;
 using MTGProxyTutor.Contracts.Interfaces;
 using MTGProxyTutor.Contracts.Models.App;
 using MTGProxyTutor.DependencyInjection;
@@ -17,7 +16,8 @@ namespace MTGProxyTutor
 		private readonly ICardDataFetcher _cardDataFetcher;
 		private readonly MultiLineStringParser _parser;
 		private readonly ILogger _logger;
-		private List<CardWrapper> _cards;
+        private readonly IPDFManager _pdfManager;
+        private List<CardWrapper> _cards;
 		private const int _apiCallWaitingTimeMs = 100;
 
 		public Main()
@@ -26,8 +26,8 @@ namespace MTGProxyTutor
 			_cardDataFetcher = DIManager.Container.Resolve<ICardDataFetcher>();
 			_parser = DIManager.Container.Resolve<MultiLineStringParser>();
 			_logger = DIManager.Container.Resolve<ILogger>();
+			_pdfManager = DIManager.Container.Resolve<IPDFManager>();
 			_cards = new List<CardWrapper>();
-
 		}
 
 		private async void searchCardsBtn_Click(object sender, EventArgs e)
@@ -123,7 +123,7 @@ namespace MTGProxyTutor
                         }
 					}
 
-					PDFHelper.SavePDF(_cards, saveFileDialog1.FileName);
+					_pdfManager.CreatePDF(_cards, saveFileDialog1.FileName);
 				}
 				catch (Exception ex)
 				{

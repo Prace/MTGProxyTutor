@@ -62,8 +62,11 @@
     <Compile Include="Parsers\FileParser.cs" />
     <Compile Include="Parsers\MultiLineStringParser.cs" />
     <Compile Include="PDF\PDFCoordinate.cs" />
-    <Compile Include="PDF\PDFHelper.cs" />
+    <Compile Include="PDF\PDFManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MTGProxyTutor.Contracts\MTGProxyTutor.Contracts.csproj">
@@ -71,9 +74,5 @@
       <Name>MTGProxyTutor.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
