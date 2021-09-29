@@ -26,11 +26,10 @@ namespace MTGProxyTutor
             InitializeComponent();
         }
 
-        public async void ExportToPDF(string filePath)
+        public async Task ExportToPDF(string filePath)
         {
             try
             {
-                //this.exportToPDFBtn.Enabled = false;
                 var cards = CardSelectionDataGrid.ItemsSource as IEnumerable<CardWrapper>;
 
                 if (cards != null)

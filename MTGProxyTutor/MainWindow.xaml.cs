@@ -5,42 +5,33 @@ using MTGProxyTutor.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Unity;
 
 namespace MTGProxyTutor
 {
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
-	public partial class MainWindow : Window
+    public partial class MainWindow : Window
 	{
 		private ICardDataFetcher _cardDataFetcher;
 		private List<ParsedCard> _parsedCards;
 		private const int _apiCallWaitingTimeMs = 100;
 
-
 		public MainWindow()
 		{
-			InitializeComponent();
 			_cardDataFetcher = DIManager.Container.Resolve<ICardDataFetcher>();
+			InitializeComponent();
 		}
 
 		public async void ParseCards(object sender, RoutedEventArgs e)
 		{
+			this.ParseCardsBtn.IsEnabled = false;
+
 			_parsedCards = this.CardList.GetParsedCards().ToList();
 			EmptyCardSelectionGrid();
 			await FillCardGrid();
+
+			this.ParseCardsBtn.IsEnabled = true;
 		}
 
 		private void EmptyCardSelectionGrid()
@@ -50,30 +41,25 @@ namespace MTGProxyTutor
 
 		private async Task FillCardGrid()
 		{
+			var failedFetch = new List<ParsedCard>();
+
 			foreach (var pc in _parsedCards)
 			{
 				try
 				{
-					await Task.Delay(_apiCallWaitingTimeMs);
-					var cardData = await _cardDataFetcher.GetCardByNameAsync(pc.CardName);
-					var cardWrapper = new CardWrapper
-					{
-						Card = cardData,
-						Quantity = pc.Quantity
-					};
-
+					var cardWrapper = await GetCard(pc);
 					this.CardSelection.CardSelectionGridVM.Cards.Add(cardWrapper);
 				}
 				catch (Exception ex)
 				{
-				}
-				finally
-				{
+					failedFetch.Add(pc);
 				}
 			}
+
+			NotifyFailedFetchedCards(failedFetch);
 		}
 
-		private void ExportToPDF(object sender, RoutedEventArgs e)
+		private async void ExportToPDF(object sender, RoutedEventArgs e)
 		{
 			this.ExportToPDFBtn.IsEnabled = false;
 
@@ -83,9 +69,30 @@ namespace MTGProxyTutor
 			saveFileDialog.ShowDialog();
 
 			if(saveFileDialog.FileName != "")
-				this.CardSelection.ExportToPDF(saveFileDialog.FileName);
+				await this.CardSelection.ExportToPDF(saveFileDialog.FileName);
 
 			this.ExportToPDFBtn.IsEnabled = true;
 		}
-	}
+
+		private async Task<CardWrapper> GetCard(ParsedCard parsedCard)
+        {
+			await Task.Delay(_apiCallWaitingTimeMs);
+			var cardData = await _cardDataFetcher.GetCardByNameAsync(parsedCard.CardName);
+			var cardWrapper = new CardWrapper
+			{
+				Card = cardData,
+				Quantity = parsedCard.Quantity
+			};
+			return cardWrapper;
+		}
+
+		private void NotifyFailedFetchedCards(List<ParsedCard> failedFetch)
+        {
+			if (failedFetch.Any())
+            {
+				var failedParseMessage = $"Could not fetch the following card(s):\n\n{string.Join("\n", failedFetch.Select(f => f.CardName))}";
+				MessageBox.Show(failedParseMessage, "Failed Cards", MessageBoxButton.OK, MessageBoxImage.Information);
+			}
+		}
+    }
 }

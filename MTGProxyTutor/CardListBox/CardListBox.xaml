@@ -6,7 +6,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TextBox Text="{Binding PastedCardList}" AcceptsReturn="true" VerticalScrollBarVisibility="Visible">
-        </TextBox>
+        <TextBox x:Name="cardsTextBox" Text="{Binding PastedCardList}" AcceptsReturn="true" VerticalScrollBarVisibility="Visible"></TextBox>
     </Grid>
 </UserControl>

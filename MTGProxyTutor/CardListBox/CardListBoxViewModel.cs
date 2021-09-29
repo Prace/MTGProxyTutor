@@ -18,7 +18,14 @@ namespace MTGProxyTutor
             {
                 pastedCardList = value;
                 this.OnPropertyChanged(nameof(pastedCardList));
+                this.OnPropertyChanged(nameof(PastedCardListEmpty));
             }
         }
+
+        public bool PastedCardListEmpty
+        {
+            get { return string.IsNullOrWhiteSpace(pastedCardList); }
+        }
+
     }
 }

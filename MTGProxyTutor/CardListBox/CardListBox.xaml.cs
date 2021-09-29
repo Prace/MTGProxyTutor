@@ -18,9 +18,6 @@ using MTGProxyTutor.BusinessLogic.Parsers;
 
 namespace MTGProxyTutor
 {
-    /// <summary>
-    /// Interaction logic for CardListBox.xaml
-    /// </summary>
     public partial class CardListBox : UserControl
     {
         private MultiLineStringParser _parser;
@@ -40,7 +37,7 @@ namespace MTGProxyTutor
             if (failed.Any())
             {
                 var failedParseMessage = $"Could not parse the following card(s):\n\n{string.Join("\n", failed)}";
-                MessageBox.Show(failedParseMessage, "My App", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(failedParseMessage, "Failed Cards", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             return parsedCards;
         }

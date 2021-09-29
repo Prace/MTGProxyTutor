@@ -135,5 +135,6 @@
       <Name>MTGProxyTutor.DependencyInjection</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
