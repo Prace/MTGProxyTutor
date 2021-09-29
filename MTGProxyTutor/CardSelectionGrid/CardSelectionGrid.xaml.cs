@@ -7,6 +7,7 @@ using System.Data;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using Unity;
+using System.Linq;
 
 namespace MTGProxyTutor
 {
@@ -34,19 +35,24 @@ namespace MTGProxyTutor
 
                 if (cards != null)
                 {
-                    foreach (CardWrapper c in cards)
+                    var selectedCards = cards.Where(x => x.IsSelected);
+
+                    if (selectedCards.Any())
                     {
-                        c.Images.Clear();
-
-                        foreach (var ci in c.Card.SelectedPrint.ImageUrls)
+                        foreach (CardWrapper c in cards.Where(x => x.IsSelected))
                         {
-                            await Task.Delay(_apiCallWaitingTimeMs);
-                            var image = await _cardDataFetcher.GetCardImageByUrlAsync(ci);
-                            c.Images.Add(image);
-                        }
-                    }
+                            c.Images.Clear();
 
-                    _pdfManager.CreatePDF(cards, filePath);
+                            foreach (var ci in c.Card.SelectedPrint.ImageUrls)
+                            {
+                                await Task.Delay(_apiCallWaitingTimeMs);
+                                var image = await _cardDataFetcher.GetCardImageByUrlAsync(ci);
+                                c.Images.Add(image);
+                            }
+                        }
+
+                        _pdfManager.CreatePDF(cards, filePath);
+                    }
                 }
             }
             catch (Exception ex)

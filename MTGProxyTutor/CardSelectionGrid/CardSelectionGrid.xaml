@@ -13,7 +13,15 @@
                Grid.Row="0"
                Grid.Column="1">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Card Name" Binding="{Binding Card.CardName}" Width="4*">
+                <DataGridCheckBoxColumn Header="Print?" Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}" Width="0.8*">
+                    <DataGridCheckBoxColumn.ElementStyle>
+                        <Style TargetType="{x:Type CheckBox}">
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridCheckBoxColumn.ElementStyle>
+                </DataGridCheckBoxColumn>
+                <DataGridTextColumn Header="Card Name" Binding="{Binding Card.CardName}" Width="3*">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="{x:Type TextBlock}">
                             <Setter Property="VerticalAlignment" Value="Center"/>
@@ -25,7 +33,7 @@
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="{x:Type TextBlock}">
                             <Setter Property="VerticalAlignment" Value="Center"/>
-                            <Setter Property="HorizontalAlignment" Value="Right"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
                             <Setter Property="Margin" Value="5"/>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
