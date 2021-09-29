@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
-using MtgApiManager.Lib.Service;
 using MTGProxyTutor.BusinessLogic.Http;
 using MTGProxyTutor.BusinessLogic.Loggers;
 using MTGProxyTutor.BusinessLogic.Parsers;
 using MTGProxyTutor.BusinessLogic.PDF;
 using MTGProxyTutor.Contracts.Interfaces;
-using MTGProxyTutor.MtGIO.Logic;
 using MTGProxyTutor.Scryfall.Logic;
 using System.Net.Http;
 using Unity;
@@ -40,7 +38,6 @@ namespace MTGProxyTutor.DependencyInjection
             container.RegisterType<IPDFManager, PDFManager>(new ContainerControlledLifetimeManager());
             container.RegisterType<MultiLineStringParser>();
             container.RegisterType<IWebApiConsumer, WebApiConsumer>();
-            container.RegisterType<IMtgServiceProvider, MtgServiceProvider>(); // MtGIO
             container.RegisterType<ICardDataFetcher, ScryfallFetcher>();
 
             return container;

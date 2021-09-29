@@ -2,8 +2,10 @@
 using MTGProxyTutor.Contracts.Interfaces;
 using MTGProxyTutor.Contracts.Models.App;
 using MTGProxyTutor.Scryfall.Models;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace MTGProxyTutor.Scryfall.Logic
 {
@@ -11,6 +13,7 @@ namespace MTGProxyTutor.Scryfall.Logic
     {
         private const string BASE_URL = "https://api.scryfall.com";
         private const string CARD_BY_NAME_URL = BASE_URL + "/cards/named?fuzzy={0}";
+        private const int CALL_WAIT_TIME_MS = 100;
         private IWebApiConsumer _webApiConsumer;
         private ILogger _logger;
         private IMapper _mapper;
@@ -22,12 +25,19 @@ namespace MTGProxyTutor.Scryfall.Logic
             _mapper = mapper;
         }
 
-        public async Task<Card> GetCardByNameAsync(string name)
+        public async Task<Card> GetCardByNameAsync(string cardName)
         {
-            string correctedName = sanitize(name);
-            var cardDetails = await _webApiConsumer.GetAsync<ScryfallCard>(string.Format(CARD_BY_NAME_URL, correctedName));
+            ScryfallCard cardDetails = await getScryfallCardByName(cardName);
+
             if (cardDetails != null)
-                return _mapper.Map<Card>(cardDetails);
+            {
+                var card = _mapper.Map<Card>(cardDetails);
+                await Task.Delay(CALL_WAIT_TIME_MS);
+                var printings = await _webApiConsumer.GetAsync<ScryfallCardPrintings>(cardDetails.Prints_search_uri);
+                card.Printings = printings.Data.Select(print => _mapper.Map<CardPrint>(print)).ToList();
+                return card;
+            }
+
             return null;
         }
 
@@ -47,6 +57,12 @@ namespace MTGProxyTutor.Scryfall.Logic
             var trimmed = name.Trim();
             string result = Regex.Replace(trimmed, @"\s+", "+");
             return result;
+        }
+
+        private Task<ScryfallCard> getScryfallCardByName(string cardName)
+        {
+            string correctedName = sanitize(cardName);
+            return _webApiConsumer.GetAsync<ScryfallCard>(string.Format(CARD_BY_NAME_URL, correctedName));
         }
     }
 }

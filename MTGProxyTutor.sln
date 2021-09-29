@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31423.177
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MTGProxyTutor", "MTGProxyTutor\MTGProxyTutor.csproj", "{1A8D9B6D-D3BA-4514-B015-9A09B4D4FE51}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MTGProxyTutor.ConsoleApp", "MTGProxyTutor.ConsoleApp\MTGProxyTutor.ConsoleApp.csproj", "{EDD48EA1-7C4F-404E-AD3D-F8C44002B993}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MTGProxyTutor.Contracts", "MTGProxyTutor.Contracts\MTGProxyTutor.Contracts.csproj", "{D2B76775-CBB5-4C7C-874B-8EAF47B6EFAF}"
@@ -15,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MTGProxyTutor.DependencyInj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MTGProxyTutor.Scryfall", "MTGProxyTutor.Scryfall\MTGProxyTutor.Scryfall.csproj", "{5C22410A-8862-4BA4-92F3-3B21C6C63206}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MTGProxyTutor.MtGIO", "MTGProxyTutor.MtGIO\MTGProxyTutor.MtGIO.csproj", "{24D3F6E4-36AC-414B-BC51-08731602A6F2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MTGProxyTutor", "MTGProxyTutor\MTGProxyTutor.csproj", "{A0EC3027-FAE2-428F-996E-9B595DDA9B4C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1A8D9B6D-D3BA-4514-B015-9A09B4D4FE51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1A8D9B6D-D3BA-4514-B015-9A09B4D4FE51}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1A8D9B6D-D3BA-4514-B015-9A09B4D4FE51}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1A8D9B6D-D3BA-4514-B015-9A09B4D4FE51}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EDD48EA1-7C4F-404E-AD3D-F8C44002B993}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EDD48EA1-7C4F-404E-AD3D-F8C44002B993}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDD48EA1-7C4F-404E-AD3D-F8C44002B993}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -47,10 +41,10 @@ Global
 		{5C22410A-8862-4BA4-92F3-3B21C6C63206}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C22410A-8862-4BA4-92F3-3B21C6C63206}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C22410A-8862-4BA4-92F3-3B21C6C63206}.Release|Any CPU.Build.0 = Release|Any CPU
-		{24D3F6E4-36AC-414B-BC51-08731602A6F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{24D3F6E4-36AC-414B-BC51-08731602A6F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{24D3F6E4-36AC-414B-BC51-08731602A6F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{24D3F6E4-36AC-414B-BC51-08731602A6F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0EC3027-FAE2-428F-996E-9B595DDA9B4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0EC3027-FAE2-428F-996E-9B595DDA9B4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0EC3027-FAE2-428F-996E-9B595DDA9B4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0EC3027-FAE2-428F-996E-9B595DDA9B4C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

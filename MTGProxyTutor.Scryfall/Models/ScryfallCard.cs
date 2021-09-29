@@ -112,4 +112,12 @@ namespace MTGProxyTutor.Scryfall.Models
         public string Toughness { get; set; }
         public Prices Prices { get; set; }
     }
+
+    public class ScryfallCardPrintings
+    {
+        public string Object { get; set; }
+        public int Total_cards { get; set; }
+        public bool Has_more { get; set; }
+        public List<ScryfallCard> Data { get; set; } = new List<ScryfallCard>();
+    }
 }

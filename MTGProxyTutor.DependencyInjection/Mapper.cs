@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using MtgApiManager.Lib.Model;
 using MTGProxyTutor.Contracts.Models.App;
 using MTGProxyTutor.Scryfall.Models;
 using System.Collections.Generic;
@@ -21,19 +20,11 @@ namespace MTGProxyTutor.DependencyInjection
 						.ForMember(dest => dest.CardName, src => src.MapFrom(s => s.Name))
 						.ForMember(dest => dest.ManaCost, src => src.MapFrom(s => s.Mana_cost))
 						.ForMember(dest => dest.Type, src => src.MapFrom(s => s.Type_line))
-						.ForMember(dest => dest.Text, src => src.MapFrom(s => s.Oracle_text))
+						.ForMember(dest => dest.Text, src => src.MapFrom(s => s.Oracle_text));
+
+					cfg.CreateMap<ScryfallCard, CardPrint>()
+						.ForMember(dest => dest.SetName, src => src.MapFrom(s => s.Set_name))
 						.ForMember(dest => dest.ImageUrls, src => src.MapFrom(s => convertScryfallImages(s)));
-
-                    #endregion
-
-                    #region MtgIO
-
-					cfg.CreateMap<ICard, Card>()
-						.ForMember(dest => dest.CardName, src => src.MapFrom(s => s.Name))
-						.ForMember(dest => dest.ManaCost, src => src.MapFrom(s => s.ManaCost))
-						.ForMember(dest => dest.Type, src => src.MapFrom(s => s.Type))
-						.ForMember(dest => dest.Text, src => src.MapFrom(s => s.Text))
-						.ForMember(dest => dest.ImageUrls, src => src.MapFrom(s => new List<string> { s.ImageUrl.ToString() }));
 
 					#endregion
 				});

@@ -15,9 +15,9 @@ namespace MTGProxyTutor.ConsoleApp
 			// Sandbox Console App - Simple Example
 
 			var fetcher = DIManager.Container.Resolve<ICardDataFetcher>();
-			Card card = fetcher.GetCardByNameAsync("delver of secrets").Result;
+			var card = fetcher.GetCardByNameAsync("delver of secrets").Result;
 			Task.Delay(200).Wait();
-			CardImage cardImg = fetcher.GetCardImageByUrlAsync(card.ImageUrls.First()).Result;
+			//CardImage cardImg = fetcher.GetCardImageByUrlAsync(card.ImageUrls.First()).Result;
 			Console.ReadKey();
 		}
 	}
