@@ -13,7 +13,7 @@ namespace MTGProxyTutor
 {
     public partial class MainWindow : Window
 	{
-		private ICardDataFetcher _cardDataFetcher;
+		private readonly ICardDataFetcher _cardDataFetcher;
 		private List<ParsedCard> _parsedCards;
 		private const int _apiCallWaitingTimeMs = 100;
 
@@ -50,7 +50,7 @@ namespace MTGProxyTutor
 					var cardWrapper = await GetCard(pc);
 					this.CardSelection.CardSelectionGridVM.Cards.Add(cardWrapper);
 				}
-				catch (Exception ex)
+				catch
 				{
 					failedFetch.Add(pc);
 				}
@@ -63,10 +63,12 @@ namespace MTGProxyTutor
 		{
 			this.ExportToPDFBtn.IsEnabled = false;
 
-			SaveFileDialog saveFileDialog = new SaveFileDialog();
-			saveFileDialog.DefaultExt = ".pdf";
-			saveFileDialog.Filter = "PDF documents (.pdf)|*.pdf";
-			saveFileDialog.ShowDialog();
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                DefaultExt = ".pdf",
+                Filter = "PDF documents (.pdf)|*.pdf"
+            };
+            saveFileDialog.ShowDialog();
 
 			if(saveFileDialog.FileName != "")
 				await this.CardSelection.ExportToPDF(saveFileDialog.FileName);
