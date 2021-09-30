@@ -17,8 +17,8 @@
         </Grid.RowDefinitions>
 
         <local:CardListBox x:Name="CardList" Grid.Row="0"/>
-        <Button x:Name="ParseCardsBtn" Click="ParseCards" Height="30" Width="50" Content="Parse" Grid.Row="1" HorizontalAlignment="Left" Margin="20,0,0,0"></Button>
-        
+        <Button x:Name="ParseCardsBtn" Click="ParseCards" Height="30" Width="50" Content="Parse" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0"></Button>
+
         <local:CardSelectionGrid x:Name="CardSelection" Grid.Row="0" Grid.Column="1"/>
         <Button x:Name="ExportToPDFBtn" Click="ExportToPDF" Height="30" Width="100" Content="Export to PDF" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,20,0"></Button>
     </Grid>

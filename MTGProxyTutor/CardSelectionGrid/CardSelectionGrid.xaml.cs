@@ -31,22 +31,22 @@ namespace MTGProxyTutor
         {
             try
             {
-                var cards = CardSelectionDataGrid.ItemsSource as IEnumerable<CardWrapper>;
+                IEnumerable<CardWrapper> cards = CardSelectionDataGrid.ItemsSource as IEnumerable<CardWrapper>;
 
                 if (cards != null)
                 {
-                    var selectedCards = cards.Where(x => x.IsSelected);
+                    IEnumerable<CardWrapper> selectedCards = cards.Where(x => x.IsSelected);
 
                     if (selectedCards.Any())
                     {
-                        foreach (CardWrapper c in cards.Where(x => x.IsSelected))
+                        foreach (CardWrapper c in selectedCards)
                         {
                             c.Images.Clear();
 
-                            foreach (var ci in c.Card.SelectedPrint.ImageUrls)
+                            foreach (string ci in c.Card.SelectedPrint.ImageUrls)
                             {
                                 await Task.Delay(_apiCallWaitingTimeMs);
-                                var image = await _cardDataFetcher.GetCardImageByUrlAsync(ci);
+                                CardImage image = await _cardDataFetcher.GetCardImageByUrlAsync(ci);
                                 c.Images.Add(image);
                             }
                         }
