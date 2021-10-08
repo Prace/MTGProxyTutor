@@ -36,10 +36,9 @@ namespace MTGProxyTutor.BusinessLogic.PDF
                             var imageToPDF = XImage.FromStream(image.GetStream());
                             xgr.DrawImage(imageToPDF, rect);
 
-                            var currPage = currCoordinate.PageNumber;
-                            currCoordinate = calculateNextCoordinate(doc, currCoordinate);
+                            var nextCoordinate = currCoordinate.NextCoordinate();
 
-                            if (currCoordinate.PageNumber != currPage)
+                            if (currCoordinate.PageNumber != nextCoordinate.PageNumber)
                             {
                                 // skip if last card to print
                                 if (!(cardWrapper == cardWrappers.Last()
@@ -49,6 +48,8 @@ namespace MTGProxyTutor.BusinessLogic.PDF
                                     addPageToPDF(doc);
                                 }
                             }
+
+                            currCoordinate = nextCoordinate;
                         }
                     }
                 }
@@ -69,25 +70,6 @@ namespace MTGProxyTutor.BusinessLogic.PDF
             page.TrimMargins.Right = marginRight;
             page.TrimMargins.Bottom = marginBottom;
             page.TrimMargins.Left = marginLeft;
-        }
-
-        private PDFCoordinate calculateNextCoordinate(PdfDocument doc, PDFCoordinate currentCoordinate)
-        {
-            var nextCoord = currentCoordinate.Clone();
-            nextCoord.ColNumber++;
-
-            if (nextCoord.ColNumber == 3)
-            {
-                nextCoord.ColNumber = 0;
-                nextCoord.RowNumber++;
-            }
-
-            if (nextCoord.RowNumber == 3)
-            {
-                return new PDFCoordinate(currentCoordinate.PageNumber + 1, 0, 0);
-            }
-
-            return nextCoord;
         }
     }
 }

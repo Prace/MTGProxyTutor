@@ -64,7 +64,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModelLocator.cs" />
     <Page Include="CardListBox\CardListBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -84,11 +84,9 @@
     <Compile Include="CardListBox\CardListBox.xaml.cs">
       <DependentUpon>CardListBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CardListBox\CardListBoxViewModel.cs" />
     <Compile Include="CardSelectionGrid\CardSelectionGrid.xaml.cs">
       <DependentUpon>CardSelectionGrid.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CardSelectionGrid\CardSelectionGridViewModel.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -133,6 +131,10 @@
     <ProjectReference Include="..\MTGProxyTutor.DependencyInjection\MTGProxyTutor.DependencyInjection.csproj">
       <Project>{F89DE8F3-4CEE-4354-922A-840E736659FE}</Project>
       <Name>MTGProxyTutor.DependencyInjection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MTGProxyTutor.ViewModels\MTGProxyTutor.ViewModels.csproj">
+      <Project>{257EDEF8-4B89-4112-92D0-F5E7D3108CFB}</Project>
+      <Name>MTGProxyTutor.ViewModels</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

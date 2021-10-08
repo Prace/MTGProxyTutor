@@ -1,42 +1,39 @@
 ﻿using Microsoft.Win32;
-using MTGProxyTutor.Contracts.Interfaces;
 using MTGProxyTutor.Contracts.Models.App;
-using MTGProxyTutor.DependencyInjection;
-using System;
+using MTGProxyTutor.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using Unity;
 
 namespace MTGProxyTutor
 {
     public partial class MainWindow : Window
 	{
-		private readonly ICardDataFetcher _cardDataFetcher;
-		private List<ParsedCard> _parsedCards;
+        private readonly MainWindowViewModel _vm;
+        private List<ParsedCard> _parsedCards;
 		private const int _apiCallWaitingTimeMs = 100;
 
 		public MainWindow()
 		{
-			_cardDataFetcher = DIManager.Container.Resolve<ICardDataFetcher>();
+			_vm = ViewModelLocator.GetViewModel<MainWindowViewModel>();
 			InitializeComponent();
 		}
 
 		public async void ParseCards(object sender, RoutedEventArgs e)
 		{
-			this.ParseCardsBtn.IsEnabled = false;
+			ParseCardsBtn.IsEnabled = false;
 
-			_parsedCards = this.CardList.GetParsedCards().ToList();
+			_parsedCards = CardList.GetParsedCards().ToList();
 			EmptyCardSelectionGrid();
 			await FillCardGrid();
 
-			this.ParseCardsBtn.IsEnabled = true;
+			ParseCardsBtn.IsEnabled = true;
 		}
 
 		private void EmptyCardSelectionGrid()
 		{
-			this.CardSelection.CardSelectionGridVM.Cards.Clear();
+			this.CardSelection.VM.Cards.Clear();
 		}
 
 		private async Task FillCardGrid()
@@ -48,7 +45,7 @@ namespace MTGProxyTutor
 				try
 				{
 					var cardWrapper = await GetCard(pc);
-					this.CardSelection.CardSelectionGridVM.Cards.Add(cardWrapper);
+					CardSelection.VM.Cards.Add(cardWrapper);
 				}
 				catch
 				{
@@ -71,15 +68,15 @@ namespace MTGProxyTutor
             saveFileDialog.ShowDialog();
 
 			if(saveFileDialog.FileName != "")
-				await this.CardSelection.ExportToPDF(saveFileDialog.FileName);
+				await CardSelection.ExportToPDF(saveFileDialog.FileName);
 
-			this.ExportToPDFBtn.IsEnabled = true;
+			ExportToPDFBtn.IsEnabled = true;
 		}
 
 		private async Task<CardWrapper> GetCard(ParsedCard parsedCard)
         {
 			await Task.Delay(_apiCallWaitingTimeMs);
-			var cardData = await _cardDataFetcher.GetCardByNameAsync(parsedCard.CardName);
+			var cardData = await _vm.GetCardByNameAsync(parsedCard.CardName);
 			var cardWrapper = new CardWrapper
 			{
 				Card = cardData,

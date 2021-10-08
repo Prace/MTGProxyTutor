@@ -1,39 +1,26 @@
-﻿using MTGProxyTutor.ViewModel;
-using MTGProxyTutor.Contracts.Models.App;
-using System;
+﻿using MTGProxyTutor.Contracts.Models.App;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using MTGProxyTutor.BusinessLogic.Parsers;
+using MTGProxyTutor.ViewModels;
 
 namespace MTGProxyTutor
 {
     public partial class CardListBox : UserControl
     {
-        private MultiLineStringParser _parser;
-        public CardListBoxViewModel CardListBoxVM;
+        public readonly CardListBoxViewModel VM;
 
         public CardListBox()
         {
-            _parser = new MultiLineStringParser();
-            CardListBoxVM = new CardListBoxViewModel();
-            DataContext = CardListBoxVM;
+            VM = ViewModelLocator.GetViewModel<CardListBoxViewModel>();
+            DataContext = VM;
             InitializeComponent();
         }
 
         public IEnumerable<ParsedCard> GetParsedCards()
         {
-            var parsedCards = _parser.Parse(CardListBoxVM.PastedCardList, out List<string> failed);
+            var parsedCards = VM.ParseCards(out List<string> failed);
             if (failed.Any())
             {
                 var failedParseMessage = $"Could not parse the following card(s):\n\n{string.Join("\n", failed)}";

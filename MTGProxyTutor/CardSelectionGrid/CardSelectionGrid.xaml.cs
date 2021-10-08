@@ -1,29 +1,23 @@
-﻿using MTGProxyTutor.Contracts.Interfaces;
-using MTGProxyTutor.Contracts.Models.App;
-using MTGProxyTutor.DependencyInjection;
+﻿using MTGProxyTutor.Contracts.Models.App;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using Unity;
 using System.Linq;
+using MTGProxyTutor.ViewModels;
 
 namespace MTGProxyTutor
 {
     public partial class CardSelectionGrid : UserControl
     {
-        public CardSelectionGridViewModel CardSelectionGridVM;
-        private ICardDataFetcher _cardDataFetcher;
-        private IPDFManager _pdfManager;
+        public readonly CardSelectionGridViewModel VM;
         private const int _apiCallWaitingTimeMs = 100;
 
         public CardSelectionGrid()
         {
-            this.CardSelectionGridVM = new CardSelectionGridViewModel();
-            this.DataContext = CardSelectionGridVM;
-            _cardDataFetcher = DIManager.Container.Resolve<ICardDataFetcher>();
-            _pdfManager = DIManager.Container.Resolve<IPDFManager>();
+            VM = ViewModelLocator.GetViewModel<CardSelectionGridViewModel>();
+            DataContext = VM;
             InitializeComponent();
         }
 
@@ -31,9 +25,7 @@ namespace MTGProxyTutor
         {
             try
             {
-                IEnumerable<CardWrapper> cards = CardSelectionDataGrid.ItemsSource as IEnumerable<CardWrapper>;
-
-                if (cards != null)
+                if (CardSelectionDataGrid.ItemsSource is IEnumerable<CardWrapper> cards)
                 {
                     IEnumerable<CardWrapper> selectedCards = cards.Where(x => x.IsSelected);
 
@@ -46,17 +38,18 @@ namespace MTGProxyTutor
                             foreach (string ci in c.Card.SelectedPrint.ImageUrls)
                             {
                                 await Task.Delay(_apiCallWaitingTimeMs);
-                                CardImage image = await _cardDataFetcher.GetCardImageByUrlAsync(ci);
+                                CardImage image = await VM.GetCardImageByUrlAsync(ci);
                                 c.Images.Add(image);
                             }
                         }
 
-                        _pdfManager.CreatePDF(cards, filePath);
+                        VM.CreatePDF(cards, filePath);
                     }
                 }
             }
-            catch (Exception ex)
+            catch
             {
+                throw;
             }
         }
     }

@@ -102,6 +102,10 @@
       <Project>{5C22410A-8862-4BA4-92F3-3B21C6C63206}</Project>
       <Name>MTGProxyTutor.Scryfall</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MTGProxyTutor.ViewModels\MTGProxyTutor.ViewModels.csproj">
+      <Project>{257EDEF8-4B89-4112-92D0-F5E7D3108CFB}</Project>
+      <Name>MTGProxyTutor.ViewModels</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

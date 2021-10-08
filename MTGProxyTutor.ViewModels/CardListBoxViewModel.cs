@@ -1,15 +1,18 @@
-﻿using MTGProxyTutor.ViewModel;
+﻿using MTGProxyTutor.Contracts.Interfaces;
 using MTGProxyTutor.Contracts.Models.App;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MTGProxyTutor
+namespace MTGProxyTutor.ViewModels
 {
     public class CardListBoxViewModel : BaseViewModel
     {
+        private IMultiLineStringParser _multiLineStringParser { get; }
+
+        public CardListBoxViewModel(IMultiLineStringParser multilineStringParser)
+        {
+            _multiLineStringParser = multilineStringParser;
+        }
+
         public string pastedCardList = "";
         public string PastedCardList
         {
@@ -27,5 +30,11 @@ namespace MTGProxyTutor
             get { return string.IsNullOrWhiteSpace(pastedCardList); }
         }
 
+
+
+        public IEnumerable<ParsedCard> ParseCards(out List<string> failed)
+        {
+            return _multiLineStringParser.Parse(PastedCardList, out failed);
+        }
     }
 }
