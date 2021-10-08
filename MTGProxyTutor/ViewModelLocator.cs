@@ -7,7 +7,7 @@ namespace MTGProxyTutor
 {
     internal static class ViewModelLocator
     {
-        private static DIManager _DIManager = new DIManager();
+        private static readonly DIManager _DIManager = new DIManager();
 
         public static T GetViewModel<T>() where T : BaseViewModel
         {
