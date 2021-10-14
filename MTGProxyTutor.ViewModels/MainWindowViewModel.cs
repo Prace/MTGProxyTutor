@@ -13,9 +13,33 @@ namespace MTGProxyTutor.ViewModels
             _cardDataFetcher = cardDataFetcher;
         }
 
+        
+
         public async Task<Card> GetCardByNameAsync(string cardName)
         {
             return await _cardDataFetcher.GetCardByNameAsync(cardName);
+        }
+
+        private bool parseCardsBtnEnabled = true;
+        public bool ParseCardsBtnEnabled
+        {
+            get {  return parseCardsBtnEnabled; }
+            set
+            {
+                parseCardsBtnEnabled = value;
+                OnPropertyChanged(nameof(ParseCardsBtnEnabled));
+            }
+        }
+
+        private bool exportBtnEnabled = false;
+        public bool ExportBtnEnabled
+        {
+            get { return exportBtnEnabled; }
+            set
+            {
+                exportBtnEnabled = value;
+                OnPropertyChanged(nameof(ExportBtnEnabled));
+            }
         }
     }
 }

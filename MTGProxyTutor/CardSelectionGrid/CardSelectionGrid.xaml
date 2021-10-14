@@ -18,6 +18,8 @@
                         <Style TargetType="{x:Type CheckBox}">
                             <Setter Property="VerticalAlignment" Value="Center"/>
                             <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <EventSetter Event="Checked"  Handler="CardSelectionCheckChanged"/>
+                            <EventSetter Event="Unchecked"  Handler="CardSelectionCheckChanged"/>
                         </Style>
                     </DataGridCheckBoxColumn.ElementStyle>
                 </DataGridCheckBoxColumn>

@@ -2,6 +2,7 @@
 using MTGProxyTutor.Contracts.Models.App;
 using MTGProxyTutor.ViewModels;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,18 +18,20 @@ namespace MTGProxyTutor
 		public MainWindow()
 		{
 			_vm = ViewModelLocator.GetViewModel<MainWindowViewModel>();
+			DataContext = _vm;
 			InitializeComponent();
+			SubscribeToChildrenEvents();
 		}
 
-		public async void ParseCards(object sender, RoutedEventArgs e)
+        public async void ParseCards(object sender, RoutedEventArgs e)
 		{
-			ParseCardsBtn.IsEnabled = false;
+			_vm.ParseCardsBtnEnabled = false;
 
 			_parsedCards = CardList.GetParsedCards().ToList();
 			EmptyCardSelectionGrid();
 			await FillCardGrid();
 
-			ParseCardsBtn.IsEnabled = true;
+			_vm.ParseCardsBtnEnabled = true;
 		}
 
 		private void EmptyCardSelectionGrid()
@@ -58,7 +61,7 @@ namespace MTGProxyTutor
 
 		private async void ExportToPDF(object sender, RoutedEventArgs e)
 		{
-			this.ExportToPDFBtn.IsEnabled = false;
+			_vm.ExportBtnEnabled = false;
 
             SaveFileDialog saveFileDialog = new SaveFileDialog
             {
@@ -70,7 +73,7 @@ namespace MTGProxyTutor
 			if(saveFileDialog.FileName != "")
 				await CardSelection.ExportToPDF(saveFileDialog.FileName);
 
-			ExportToPDFBtn.IsEnabled = true;
+			_vm.ExportBtnEnabled = true;
 		}
 
 		private async Task<CardWrapper> GetCard(ParsedCard parsedCard)
@@ -93,5 +96,15 @@ namespace MTGProxyTutor
 				MessageBox.Show(failedParseMessage, "Failed Cards", MessageBoxButton.OK, MessageBoxImage.Information);
 			}
 		}
-    }
+
+		private void SubscribeToChildrenEvents()
+		{
+			CardSelection.SelectedCardsChanged += ToggleExportBtn;
+		}
+
+        private void ToggleExportBtn()
+        {
+			_vm.ExportBtnEnabled = CardSelection.VM.Cards.Any(c => c.IsSelected);
+		}
+	}
 }

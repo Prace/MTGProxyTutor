@@ -2,6 +2,7 @@
 using MTGProxyTutor.Contracts.Models.App;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MTGProxyTutor.ViewModels
@@ -27,7 +28,7 @@ namespace MTGProxyTutor.ViewModels
             set
             {
                 this.cards = value;
-                this.OnPropertyChanged(nameof(cards));
+                this.OnPropertyChanged(nameof(Cards));
             }
         }
 

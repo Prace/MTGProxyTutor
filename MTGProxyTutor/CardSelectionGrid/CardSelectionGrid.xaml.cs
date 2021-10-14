@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Linq;
 using MTGProxyTutor.ViewModels;
+using System.Collections.ObjectModel;
 
 namespace MTGProxyTutor
 {
     public partial class CardSelectionGrid : UserControl
     {
         public readonly CardSelectionGridViewModel VM;
+        public event Action SelectedCardsChanged;
         private const int _apiCallWaitingTimeMs = 100;
 
         public CardSelectionGrid()
@@ -43,7 +45,10 @@ namespace MTGProxyTutor
                             }
                         }
 
-                        VM.CreatePDF(cards, filePath);
+                        if (selectedCards.Any())
+                        {
+                            VM.CreatePDF(selectedCards, filePath);
+                        }
                     }
                 }
             }
@@ -51,6 +56,11 @@ namespace MTGProxyTutor
             {
                 throw;
             }
+        }
+
+        private void CardSelectionCheckChanged(object sender, System.Windows.RoutedEventArgs e)
+        {
+            SelectedCardsChanged?.Invoke();
         }
     }
 }
