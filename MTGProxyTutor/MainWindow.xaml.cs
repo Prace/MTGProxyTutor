@@ -2,7 +2,6 @@
 using MTGProxyTutor.Contracts.Models.App;
 using MTGProxyTutor.ViewModels;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;

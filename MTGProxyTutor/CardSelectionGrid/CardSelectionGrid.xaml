@@ -44,7 +44,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <ComboBox ItemsSource="{Binding Card.Printings}" 
-                                      DisplayMemberPath="SetName" 
+                                      DisplayMemberPath="CompleteInfo" 
                                       SelectedItem="{Binding Card.SelectedPrint, UpdateSourceTrigger=PropertyChanged}"
                                       IsSynchronizedWithCurrentItem="True">
                             </ComboBox>

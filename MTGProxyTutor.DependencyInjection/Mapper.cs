@@ -24,6 +24,7 @@ namespace MTGProxyTutor.DependencyInjection
 
 					cfg.CreateMap<ScryfallCard, CardPrint>()
 						.ForMember(dest => dest.SetName, src => src.MapFrom(s => s.Set_name))
+						.ForMember(dest => dest.FullArt, src => src.MapFrom(s => s.Full_art))
 						.ForMember(dest => dest.ImageUrls, src => src.MapFrom(s => convertScryfallImages(s)));
 
 					#endregion
