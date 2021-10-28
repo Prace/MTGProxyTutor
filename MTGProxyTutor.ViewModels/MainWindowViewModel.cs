@@ -7,6 +7,8 @@ namespace MTGProxyTutor.ViewModels
     public class MainWindowViewModel : BaseViewModel
     {
         private readonly ICardDataFetcher _cardDataFetcher;
+        private const int _apiCallWaitingTimeMs = 100;
+
 
         public MainWindowViewModel(ICardDataFetcher cardDataFetcher)
         {
@@ -14,12 +16,6 @@ namespace MTGProxyTutor.ViewModels
         }
 
         
-
-        public async Task<Card> GetCardByNameAsync(string cardName)
-        {
-            return await _cardDataFetcher.GetCardByNameAsync(cardName);
-        }
-
         private bool parseCardsBtnEnabled = true;
         public bool ParseCardsBtnEnabled
         {
@@ -40,6 +36,23 @@ namespace MTGProxyTutor.ViewModels
                 exportBtnEnabled = value;
                 OnPropertyChanged(nameof(ExportBtnEnabled));
             }
+        }
+
+        public async Task<Card> GetCardByNameAsync(string cardName)
+        {
+            return await _cardDataFetcher.GetCardByNameAsync(cardName);
+        }
+
+        public async Task<CardWrapperViewModel> GetCard(ParsedCard parsedCard)
+        {
+            await Task.Delay(_apiCallWaitingTimeMs);
+            var cardData = await GetCardByNameAsync(parsedCard.CardName);
+            var cardWrapper = new CardWrapperViewModel
+            {
+                Card = cardData,
+                Quantity = parsedCard.Quantity
+            };
+            return cardWrapper;
         }
     }
 }

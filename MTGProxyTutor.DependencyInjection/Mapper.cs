@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MTGProxyTutor.Contracts.Models.App;
 using MTGProxyTutor.Scryfall.Models;
+using MTGProxyTutor.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,6 +27,13 @@ namespace MTGProxyTutor.DependencyInjection
 						.ForMember(dest => dest.SetName, src => src.MapFrom(s => s.Set_name))
 						.ForMember(dest => dest.FullArt, src => src.MapFrom(s => s.Full_art))
 						.ForMember(dest => dest.ImageUrls, src => src.MapFrom(s => convertScryfallImages(s)));
+
+					#endregion
+
+					#region DTO to ViewModel
+
+					cfg.CreateMap<CardWrapper, CardWrapperViewModel>();
+					cfg.CreateMap<CardWrapperViewModel, CardWrapper> ();
 
 					#endregion
 				});

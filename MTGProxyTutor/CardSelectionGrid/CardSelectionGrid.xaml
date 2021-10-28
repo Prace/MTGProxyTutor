@@ -13,7 +13,7 @@
                Grid.Row="0"
                Grid.Column="1">
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn Header="Print?" Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}" Width="0.8*">
+                <DataGridCheckBoxColumn Header="Print?" Binding="{Binding IsSelected, Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}" Width="0.8*">
                     <DataGridCheckBoxColumn.ElementStyle>
                         <Style TargetType="{x:Type CheckBox}">
                             <Setter Property="VerticalAlignment" Value="Center"/>
@@ -31,7 +31,7 @@
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="1*">
+                <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity, Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}" Width="1*">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="{x:Type TextBlock}">
                             <Setter Property="VerticalAlignment" Value="Center"/>

@@ -27,13 +27,13 @@ namespace MTGProxyTutor
         {
             try
             {
-                if (CardSelectionDataGrid.ItemsSource is IEnumerable<CardWrapper> cards)
+                if (CardSelectionDataGrid.ItemsSource is IEnumerable<CardWrapperViewModel> cards)
                 {
-                    IEnumerable<CardWrapper> selectedCards = cards.Where(x => x.IsSelected);
+                    IEnumerable<CardWrapperViewModel> selectedCards = cards.Where(x => x.IsSelected);
 
                     if (selectedCards.Any())
                     {
-                        foreach (CardWrapper c in selectedCards)
+                        foreach (CardWrapperViewModel c in selectedCards)
                         {
                             c.Images.Clear();
 

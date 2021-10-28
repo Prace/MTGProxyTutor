@@ -12,7 +12,6 @@ namespace MTGProxyTutor
 	{
         private readonly MainWindowViewModel _vm;
         private List<ParsedCard> _parsedCards;
-		private const int _apiCallWaitingTimeMs = 100;
 
 		public MainWindow()
 		{
@@ -27,33 +26,36 @@ namespace MTGProxyTutor
 			_vm.ParseCardsBtnEnabled = false;
 
 			_parsedCards = CardList.GetParsedCards().ToList();
-			EmptyCardSelectionGrid();
 			await FillCardGrid();
 
 			_vm.ParseCardsBtnEnabled = true;
 		}
 
-		private void EmptyCardSelectionGrid()
-		{
-			this.CardSelection.VM.Cards.Clear();
-		}
-
 		private async Task FillCardGrid()
 		{
 			var failedFetch = new List<ParsedCard>();
+			var updatedCards = new List<string>();
 
 			foreach (var pc in _parsedCards)
 			{
 				try
 				{
-					var cardWrapper = await GetCard(pc);
-					CardSelection.VM.Cards.Add(cardWrapper);
+					var cardWrapper = await _vm.GetCard(pc);
+					AddOrUpdateCard(cardWrapper);
+					updatedCards.Add(cardWrapper.Card.CardName);
 				}
 				catch
 				{
 					failedFetch.Add(pc);
 				}
 			}
+
+			var cardsToRemove = CardSelection.VM.Cards.Where(c => !updatedCards.Contains(c.Card.CardName));
+
+			foreach (var rc in cardsToRemove.ToList())
+            {
+				CardSelection.VM.RemoveCard(rc);
+            }
 
 			NotifyFailedFetchedCards(failedFetch);
 		}
@@ -75,18 +77,6 @@ namespace MTGProxyTutor
 			_vm.ExportBtnEnabled = true;
 		}
 
-		private async Task<CardWrapper> GetCard(ParsedCard parsedCard)
-        {
-			await Task.Delay(_apiCallWaitingTimeMs);
-			var cardData = await _vm.GetCardByNameAsync(parsedCard.CardName);
-			var cardWrapper = new CardWrapper
-			{
-				Card = cardData,
-				Quantity = parsedCard.Quantity
-			};
-			return cardWrapper;
-		}
-
 		private void NotifyFailedFetchedCards(List<ParsedCard> failedFetch)
         {
 			if (failedFetch.Any())
@@ -104,6 +94,20 @@ namespace MTGProxyTutor
         private void ToggleExportBtn()
         {
 			_vm.ExportBtnEnabled = CardSelection.VM.Cards.Any(c => c.IsSelected);
+		}
+
+		private void AddOrUpdateCard(CardWrapperViewModel cardWrapper)
+        {
+			var match = CardSelection.VM.Cards.FirstOrDefault(c => cardWrapper.Card.CardName == c.Card.CardName);
+
+			if (match != null)
+			{
+				match.Quantity = cardWrapper.Quantity;
+			}
+			else
+			{
+				CardSelection.VM.Cards.Add(cardWrapper);
+			}
 		}
 	}
 }

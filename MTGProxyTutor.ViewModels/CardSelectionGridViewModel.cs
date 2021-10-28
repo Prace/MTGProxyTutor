@@ -1,4 +1,5 @@
-﻿using MTGProxyTutor.Contracts.Interfaces;
+﻿using AutoMapper;
+using MTGProxyTutor.Contracts.Interfaces;
 using MTGProxyTutor.Contracts.Models.App;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,15 +12,17 @@ namespace MTGProxyTutor.ViewModels
     {
         private readonly ICardDataFetcher _cardDataFetcher;
         private readonly IPDFManager _pdfManager;
+        private readonly IMapper _mapper;
 
-        public CardSelectionGridViewModel(ICardDataFetcher cardDataFetcher, IPDFManager pdfManager)
+        public CardSelectionGridViewModel(ICardDataFetcher cardDataFetcher, IPDFManager pdfManager, IMapper mapper)
         {
             _cardDataFetcher = cardDataFetcher;
             _pdfManager = pdfManager;
+            _mapper = mapper;
         }
 
-        private ObservableCollection<CardWrapper> cards = new ObservableCollection<CardWrapper>();
-        public ObservableCollection<CardWrapper> Cards
+        private ObservableCollection<CardWrapperViewModel> cards = new ObservableCollection<CardWrapperViewModel>();
+        public ObservableCollection<CardWrapperViewModel> Cards
         {
             get
             {
@@ -37,9 +40,23 @@ namespace MTGProxyTutor.ViewModels
             return await _cardDataFetcher.GetCardImageByUrlAsync(cardImageUrl);
         }
 
-        public void CreatePDF(IEnumerable<CardWrapper> cards, string filePath)
+        public void CreatePDF(IEnumerable<CardWrapperViewModel> cards, string filePath)
         {
-            _pdfManager.CreatePDF(cards, filePath);
+            _pdfManager.CreatePDF(cards.Select(c => _mapper.Map<CardWrapper>(c)), filePath);
+        }
+
+        public void RemoveCard(string cardName)
+        {
+            var toRemove = this.Cards.Where(c => c.Card.CardName == cardName);
+            foreach (var c in toRemove)
+            {
+                this.Cards.Remove(c);
+            }
+        }
+
+        public void RemoveCard(CardWrapperViewModel card)
+        {
+            this.Cards.Remove(card);
         }
     }
 }
