@@ -35,7 +35,10 @@ namespace MTGProxyTutor
                     {
                         foreach (CardWrapperViewModel c in selectedCards)
                         {
-                            c.Images.Clear();
+                            if (c.Images != null)
+                                c.Images.Clear();
+                            else
+                                c.Images = new List<CardImage>();
 
                             foreach (string ci in c.Card.SelectedPrint.ImageUrls)
                             {
