@@ -42,7 +42,8 @@ namespace MTGProxyTutor.ViewModels
 
         public void CreatePDF(IEnumerable<CardWrapperViewModel> cards, string filePath)
         {
-            _pdfManager.CreatePDF(cards.Select(c => _mapper.Map<CardWrapper>(c)), filePath);
+            var selectedCards = cards.Select(c => _mapper.Map<CardWrapper>(c)).ToList();
+            _pdfManager.CreatePDF(selectedCards, filePath);
         }
 
         public void RemoveCard(string cardName)
