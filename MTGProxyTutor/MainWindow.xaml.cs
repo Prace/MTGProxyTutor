@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using MTGProxyTutor.Contracts.Models.App;
 using MTGProxyTutor.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -62,19 +63,30 @@ namespace MTGProxyTutor
 
 		private async void ExportToPDF(object sender, RoutedEventArgs e)
 		{
-			_vm.ExportBtnEnabled = false;
-
-            SaveFileDialog saveFileDialog = new SaveFileDialog
+            try
             {
-                DefaultExt = ".pdf",
-                Filter = "PDF documents (.pdf)|*.pdf"
-            };
-            saveFileDialog.ShowDialog();
+				_vm.ExportBtnEnabled = false;
 
-			if(saveFileDialog.FileName != "")
-				await CardSelection.ExportToPDF(saveFileDialog.FileName);
+				SaveFileDialog saveFileDialog = new SaveFileDialog
+				{
+					DefaultExt = ".pdf",
+					Filter = "PDF documents (.pdf)|*.pdf"
+				};
+				saveFileDialog.ShowDialog();
 
-			_vm.ExportBtnEnabled = true;
+				if (saveFileDialog.FileName != "")
+					await CardSelection.ExportToPDF(saveFileDialog.FileName);
+
+			}
+            catch (Exception ex)
+            {
+				var message = $"An error has occurred exporting PDF file: {ex.Message}";
+				MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+			}
+            finally
+            {
+				_vm.ExportBtnEnabled = true;
+			}
 		}
 
 		private void NotifyFailedFetchedCards(List<ParsedCard> failedFetch)

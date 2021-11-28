@@ -47,11 +47,7 @@ namespace MTGProxyTutor.ViewModels
         {
             await Task.Delay(_apiCallWaitingTimeMs);
             var cardData = await GetCardByNameAsync(parsedCard.CardName);
-            var cardWrapper = new CardWrapperViewModel
-            {
-                Card = cardData,
-                Quantity = parsedCard.Quantity
-            };
+            var cardWrapper = new CardWrapperViewModel(cardData, parsedCard.Quantity);
             return cardWrapper;
         }
     }

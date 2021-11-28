@@ -3,8 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:converters="clr-namespace:MTGProxyTutor"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converters:CardNameGridConverter x:Key="CardNameGridConverter" />
+    </UserControl.Resources>
     <Grid>
         <DataGrid x:Name="CardSelectionDataGrid"
                ItemsSource="{Binding Cards}" 
@@ -23,7 +27,7 @@
                         </Style>
                     </DataGridCheckBoxColumn.ElementStyle>
                 </DataGridCheckBoxColumn>
-                <DataGridTextColumn Header="Card Name" Binding="{Binding Card.CardName}" Width="3*">
+                <DataGridTextColumn Header="Card Name" Binding="{Binding Path=Card, Converter={StaticResource CardNameGridConverter}}" Width="3*">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="{x:Type TextBlock}">
                             <Setter Property="VerticalAlignment" Value="Center"/>

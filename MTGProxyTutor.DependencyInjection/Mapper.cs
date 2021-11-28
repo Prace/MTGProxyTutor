@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using MTGProxyTutor.Contracts.Models.App;
+using MTGProxyTutor.Contracts.Models.Magic;
+using MTGProxyTutor.Contracts.Models.Pokemon;
 using MTGProxyTutor.Scryfall.Models;
 using MTGProxyTutor.ViewModels;
 using System.Collections.Generic;
@@ -17,13 +19,13 @@ namespace MTGProxyTutor.DependencyInjection
 				{
 					#region Scryfall
 
-					cfg.CreateMap<ScryfallCard, Card>()
+					cfg.CreateMap<ScryfallCard, MagicCard>()
 						.ForMember(dest => dest.CardName, src => src.MapFrom(s => s.Name))
 						.ForMember(dest => dest.ManaCost, src => src.MapFrom(s => s.Mana_cost))
 						.ForMember(dest => dest.Type, src => src.MapFrom(s => s.Type_line))
 						.ForMember(dest => dest.Text, src => src.MapFrom(s => s.Oracle_text));
 
-					cfg.CreateMap<ScryfallCard, CardPrint>()
+					cfg.CreateMap<ScryfallCard, MagicCardPrint>()
 						.ForMember(dest => dest.SetName, src => src.MapFrom(s => s.Set_name))
 						.ForMember(dest => dest.FullArt, src => src.MapFrom(s => s.Full_art))
 						.ForMember(dest => dest.ImageUrls, src => src.MapFrom(s => convertScryfallImages(s)));

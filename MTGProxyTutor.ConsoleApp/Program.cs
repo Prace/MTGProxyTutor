@@ -16,9 +16,9 @@ namespace MTGProxyTutor.ConsoleApp
 
 			var diManager = new DIManager();
 			var fetcher = diManager.Container.Resolve<ICardDataFetcher>();
-			var card = fetcher.GetCardByNameAsync("delver of secrets").Result;
+			var card = fetcher.GetCardByNameAsync("charizard").Result;
 			Task.Delay(200).Wait();
-			//CardImage cardImg = fetcher.GetCardImageByUrlAsync(card.ImageUrls.First()).Result;
+			CardImage cardImg = fetcher.GetCardImageByUrlAsync(card.SelectedPrint.ImageUrls.First()).Result;
 			Console.ReadKey();
 		}
 	}

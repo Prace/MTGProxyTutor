@@ -64,6 +64,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CardSelectionGrid\CardNameGridConverter.cs" />
     <Compile Include="ViewModelLocator.cs" />
     <Page Include="CardListBox\CardListBox.xaml">
       <Generator>MSBuild:Compile</Generator>

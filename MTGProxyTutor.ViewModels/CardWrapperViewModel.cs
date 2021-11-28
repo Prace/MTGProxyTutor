@@ -1,10 +1,18 @@
 ﻿using MTGProxyTutor.Contracts.Models.App;
+using System;
 using System.Collections.Generic;
 
 namespace MTGProxyTutor.ViewModels
 {
 	public class CardWrapperViewModel : BaseViewModel
     {
+        public CardWrapperViewModel(Card card, int quantity)
+        {
+            Card = card;
+            Quantity = quantity;
+            this.Card.OnSelectedPrintChanged += selectedPrintChangedHandler;
+        }
+
         private bool _isSelected = true;
 		public bool IsSelected
         {
@@ -59,6 +67,11 @@ namespace MTGProxyTutor.ViewModels
                 _images = value;
                 this.OnPropertyChanged(nameof(Images));
             }
+        }
+
+        private void selectedPrintChangedHandler()
+        {
+            this.OnPropertyChanged(nameof(Card));
         }
     }
 }

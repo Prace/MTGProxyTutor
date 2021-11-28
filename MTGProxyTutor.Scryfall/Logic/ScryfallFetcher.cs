@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Linq;
+using MTGProxyTutor.Contracts.Models.Magic;
 
 namespace MTGProxyTutor.Scryfall.Logic
 {
@@ -31,10 +32,10 @@ namespace MTGProxyTutor.Scryfall.Logic
 
             if (cardDetails != null)
             {
-                var card = _mapper.Map<Card>(cardDetails);
+                var card = _mapper.Map<MagicCard>(cardDetails);
                 await Task.Delay(CALL_WAIT_TIME_MS);
                 var printings = await _webApiConsumer.GetAsync<ScryfallCardPrintings>(cardDetails.Prints_search_uri);
-                card.Printings = printings.Data.Select(print => _mapper.Map<CardPrint>(print)).ToList();
+                card.Printings = printings.Data.Select(print => _mapper.Map<MagicCardPrint>(print) as CardPrint).ToList();
                 return card;
             }
 

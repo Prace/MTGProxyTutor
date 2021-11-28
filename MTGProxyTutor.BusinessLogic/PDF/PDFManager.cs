@@ -41,13 +41,16 @@ namespace MTGProxyTutor.BusinessLogic.PDF
                             if (currCoordinate.PageNumber != nextCoordinate.PageNumber)
                             {
                                 // skip if last card to print
-                                bool isLastImageForCard = !(cardWrapper.Id == cardWrappers.Last().Id && image == cardWrapper.Images.Last());
-                                bool isLastRepeptitionForCard = cardWrapper.Quantity == 1 ? true : i < cardWrapper.Quantity - 1;
+                                bool isLastCard = cardWrapper.Id == cardWrappers.Last().Id;
+                                bool isLastImageForCard = image == cardWrapper.Images.Last();
+                                bool isLastRepetitionForCard = i == cardWrapper.Quantity - 1;
 
-                                if (isLastImageForCard && isLastRepeptitionForCard)
+                                if (isLastCard && isLastImageForCard && isLastRepetitionForCard)
                                 {
-                                    addPageToPDF(doc);
+                                    break;
                                 }
+
+                                addPageToPDF(doc);
                             }
 
                             currCoordinate = nextCoordinate;

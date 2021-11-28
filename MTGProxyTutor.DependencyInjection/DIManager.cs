@@ -4,6 +4,7 @@ using MTGProxyTutor.BusinessLogic.Loggers;
 using MTGProxyTutor.BusinessLogic.Parsers;
 using MTGProxyTutor.BusinessLogic.PDF;
 using MTGProxyTutor.Contracts.Interfaces;
+using MTGProxyTutor.PokemonTCG.Logic;
 using MTGProxyTutor.Scryfall.Logic;
 using MTGProxyTutor.ViewModels;
 using System.Net.Http;
@@ -33,7 +34,8 @@ namespace MTGProxyTutor.DependencyInjection
             container.RegisterType<IPDFManager, PDFManager>(new ContainerControlledLifetimeManager());
             container.RegisterType<IMultiLineStringParser, MultiLineStringParser>();
             container.RegisterType<IWebApiConsumer, WebApiConsumer>();
-            container.RegisterType<ICardDataFetcher, ScryfallFetcher>();
+            //container.RegisterType<ICardDataFetcher, ScryfallFetcher>();
+            container.RegisterType<ICardDataFetcher, PokemonTCGFetcher>();
 
             #endregion
 
