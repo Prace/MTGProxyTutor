@@ -24,10 +24,18 @@
                   DisplayMemberPath="Key"
                   SelectedValue="{Binding Path=SelectedTCGType}" />
 
-        <Button x:Name="ParseCardsBtn" Click="ParseCards" IsEnabled="{Binding ParseCardsBtnEnabled}" Height="30" Width="50" Content="Parse" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="20,0,0,0"></Button>
+        <Button x:Name="ParseCardsBtn" Click="ParseCards" IsEnabled="{Binding ParseCardsBtnEnabled}" Height="30" Width="60" Content="Parse" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="20,0,0,0"></Button>
 
         <local:CardSelectionGrid x:Name="CardSelection" Grid.Row="0" Grid.Column="1" />
-        
+
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1" Margin="20">
+            <Label x:Name="TotalCardsLabel" Content="Total Cards:" VerticalAlignment="Center" />
+            <TextBlock x:Name="TotalCardsNumber" Text="{Binding TotalCardsToPrint}" VerticalAlignment="Center" FontWeight="Bold" Grid.Column="1" Grid.Row="1" />
+
+            <Label x:Name="TotalSheetsLabel" Content="Total Sheets:" VerticalAlignment="Center" />
+            <TextBlock x:Name="TotalSheetsNumber" Text="{Binding TotalSheetsToPrint}" VerticalAlignment="Center" FontWeight="Bold" Grid.Column="1" Grid.Row="1" />
+        </StackPanel>
+
         <Button x:Name="ExportToPDFBtn" Click="ExportToPDF" IsEnabled="{Binding ExportBtnEnabled}" Height="30" Width="100" Content="Export to PDF" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,20,0"></Button>
     </Grid>
 </Window>

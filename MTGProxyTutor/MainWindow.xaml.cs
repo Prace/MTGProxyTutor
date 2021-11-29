@@ -102,9 +102,9 @@ namespace MTGProxyTutor
 		private void SubscribeToChildrenEvents()
 		{
 			CardSelection.SelectedCardsChanged += ToggleExportBtn;
+			CardSelection.SelectedCardsChanged += UpdateTotalInfo;
 			TCGSelection.SelectionChanged += UpdateCardFecthingStrategy;
 		}
-
         private void UpdateCardFecthingStrategy(object sender, SelectionChangedEventArgs e)
         {
 			CardDataFetcherLocator.CurrentGame = _vm.SelectedTCGType;
@@ -143,10 +143,20 @@ namespace MTGProxyTutor
 			_vm.ExportBtnEnabled = CardSelection.VM.Cards.Any(c => c.IsSelected);
 		}
 
+		private void UpdateTotalInfo()
+		{
+			if (CardSelection.VM.Cards != null)
+            {
+				_vm.TotalCardsToPrint = CardSelection.VM.Cards.Where(c => c.IsSelected).Sum(c => c.Quantity);
+				_vm.TotalSheetsToPrint = (int)Math.Ceiling(_vm.TotalCardsToPrint / 9.0);
+			}
+		}
+
 		private void ClearData()
         {
 			CardSelection.VM.Cards.Clear();
 			ToggleExportBtn();
+			UpdateTotalInfo();
 		}
 	}
 }

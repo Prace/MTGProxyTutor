@@ -21,6 +21,28 @@ namespace MTGProxyTutor.ViewModels
             }
         }
 
+        private int totalCardsToPrint;
+        public int TotalCardsToPrint
+        {
+            get {  return totalCardsToPrint; }
+            set
+            {
+                totalCardsToPrint = value;
+                OnPropertyChanged(nameof(TotalCardsToPrint));
+            }
+        }
+
+        private int totalSheetsToPrint;
+        public int TotalSheetsToPrint
+        {
+            get { return totalSheetsToPrint; }
+            set
+            {
+                totalSheetsToPrint = value;
+                OnPropertyChanged(nameof(TotalSheetsToPrint));
+            }
+        }
+
         private bool parseCardsBtnEnabled = true;
         public bool ParseCardsBtnEnabled
         {

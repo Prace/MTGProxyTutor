@@ -23,6 +23,15 @@ namespace MTGProxyTutor
             InitializeComponent();
         }
 
+        public int TotalCardsToPrint
+        {
+            get
+            {
+                var cards = CardSelectionDataGrid.ItemsSource as IEnumerable<CardWrapperViewModel>;
+                return cards.Where(c => c.IsSelected).Sum(c => c.Quantity);
+            }
+        }
+
         public async Task ExportToPDF(string filePath)
         {
             try
