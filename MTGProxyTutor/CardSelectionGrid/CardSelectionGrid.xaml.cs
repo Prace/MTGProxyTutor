@@ -43,7 +43,7 @@ namespace MTGProxyTutor
                             foreach (string ci in c.Card.SelectedPrint.ImageUrls)
                             {
                                 await Task.Delay(_apiCallWaitingTimeMs);
-                                CardImage image = await VM.GetCardImageByUrlAsync(ci);
+                                CardImage image = await CardDataFetcherLocator.Instance.GetCardImageByUrlAsync(ci);
                                 c.Images.Add(image);
                             }
                         }

@@ -64,8 +64,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CardSelectionGrid\CardNameGridConverter.cs" />
-    <Compile Include="ViewModelLocator.cs" />
+    <Compile Include="Converters\EnumToCollectionConverter.cs" />
+    <Compile Include="Helpers\EnumHelper.cs" />
+    <Compile Include="ServiceLocators\CardDataFetcherLocator.cs" />
+    <Compile Include="Converters\CardNameGridConverter.cs" />
+    <Compile Include="ServiceLocators\ViewModelLocator.cs" />
     <Page Include="CardListBox\CardListBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -1,4 +1,5 @@
-﻿using MTGProxyTutor.Contracts.Models.App;
+﻿using MTGProxyTutor.Contracts.Extensions;
+using MTGProxyTutor.Contracts.Models.App;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,7 +13,14 @@ namespace MTGProxyTutor.Contracts.Models.Magic
         public bool Oversized { get; set; }
         public bool Textless { get; set; }
 
-        public string CompleteInfo
+        private string rarity;
+        public override string Rarity
+        {
+            get { return rarity; }
+            set { rarity = value?.CapitalizeFirstLetter(); }
+        }
+
+        public override string CompleteInfo
         {
             get
             {

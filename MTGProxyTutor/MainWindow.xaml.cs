@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace MTGProxyTutor
 {
@@ -41,7 +42,7 @@ namespace MTGProxyTutor
 			{
 				try
 				{
-					var cardWrapper = await _vm.GetCard(pc);
+					var cardWrapper = await GetCard(pc);
 					AddOrUpdateCard(cardWrapper);
 					updatedCards.Add(cardWrapper.Card.CardName);
 				}
@@ -101,11 +102,13 @@ namespace MTGProxyTutor
 		private void SubscribeToChildrenEvents()
 		{
 			CardSelection.SelectedCardsChanged += ToggleExportBtn;
+			TCGSelection.SelectionChanged += UpdateCardFecthingStrategy;
 		}
 
-        private void ToggleExportBtn()
+        private void UpdateCardFecthingStrategy(object sender, SelectionChangedEventArgs e)
         {
-			_vm.ExportBtnEnabled = CardSelection.VM.Cards.Any(c => c.IsSelected);
+			CardDataFetcherLocator.CurrentGame = _vm.SelectedTCGType;
+			ClearData();
 		}
 
 		private void AddOrUpdateCard(CardWrapperViewModel cardWrapper)
@@ -120,6 +123,30 @@ namespace MTGProxyTutor
 			{
 				CardSelection.VM.Cards.Add(cardWrapper);
 			}
+		}
+
+		private async Task<Card> GetCardByNameAsync(string cardName)
+		{
+			return await CardDataFetcherLocator.Instance.GetCardByNameAsync(cardName);
+		}
+
+		private async Task<CardWrapperViewModel> GetCard(ParsedCard parsedCard)
+		{
+			await Task.Delay(200);
+			var cardData = await GetCardByNameAsync(parsedCard.CardName);
+			var cardWrapper = new CardWrapperViewModel(cardData, parsedCard.Quantity);
+			return cardWrapper;
+		}
+
+		private void ToggleExportBtn()
+		{
+			_vm.ExportBtnEnabled = CardSelection.VM.Cards.Any(c => c.IsSelected);
+		}
+
+		private void ClearData()
+        {
+			CardSelection.VM.Cards.Clear();
+			ToggleExportBtn();
 		}
 	}
 }

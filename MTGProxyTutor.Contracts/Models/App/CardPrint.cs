@@ -9,6 +9,8 @@ namespace MTGProxyTutor.Contracts.Models.App
     public abstract class CardPrint
     {
         public string SetName {  get; set; }
+        public virtual string Rarity { get; set; }
         public List<string> ImageUrls { get; set; }
+        public abstract string CompleteInfo { get; }
     }
 }

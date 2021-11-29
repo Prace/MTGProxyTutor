@@ -98,13 +98,9 @@
       <Project>{D2B76775-CBB5-4C7C-874B-8EAF47B6EFAF}</Project>
       <Name>MTGProxyTutor.Contracts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MTGProxyTutor.PokemonTCG\MTGProxyTutor.PokemonTCG.csproj">
-      <Project>{0483AE5E-FD6E-496E-994A-5C5075A2922C}</Project>
-      <Name>MTGProxyTutor.PokemonTCG</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MTGProxyTutor.Scryfall\MTGProxyTutor.Scryfall.csproj">
-      <Project>{5C22410A-8862-4BA4-92F3-3B21C6C63206}</Project>
-      <Name>MTGProxyTutor.Scryfall</Name>
+    <ProjectReference Include="..\MTGProxyTutor.DataGathering\MTGProxyTutor.DataGathering.csproj">
+      <Project>{04D50AA1-450E-4F3B-B86D-7EB019491106}</Project>
+      <Name>MTGProxyTutor.DataGathering</Name>
     </ProjectReference>
     <ProjectReference Include="..\MTGProxyTutor.ViewModels\MTGProxyTutor.ViewModels.csproj">
       <Project>{257EDEF8-4B89-4112-92D0-F5E7D3108CFB}</Project>

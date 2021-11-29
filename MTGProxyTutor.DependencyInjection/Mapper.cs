@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using MTGProxyTutor.Contracts.Models.App;
 using MTGProxyTutor.Contracts.Models.Magic;
-using MTGProxyTutor.Contracts.Models.Pokemon;
-using MTGProxyTutor.Scryfall.Models;
+using MTGProxyTutor.DataGathering.Scryfall.Models;
 using MTGProxyTutor.ViewModels;
 using System.Collections.Generic;
 using System.Linq;

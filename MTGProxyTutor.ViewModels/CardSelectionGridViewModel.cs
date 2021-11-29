@@ -10,13 +10,11 @@ namespace MTGProxyTutor.ViewModels
 {
     public class CardSelectionGridViewModel : BaseViewModel
     {
-        private readonly ICardDataFetcher _cardDataFetcher;
         private readonly IPDFManager _pdfManager;
         private readonly IMapper _mapper;
 
-        public CardSelectionGridViewModel(ICardDataFetcher cardDataFetcher, IPDFManager pdfManager, IMapper mapper)
+        public CardSelectionGridViewModel(IPDFManager pdfManager, IMapper mapper)
         {
-            _cardDataFetcher = cardDataFetcher;
             _pdfManager = pdfManager;
             _mapper = mapper;
         }
@@ -33,11 +31,6 @@ namespace MTGProxyTutor.ViewModels
                 this.cards = value;
                 this.OnPropertyChanged(nameof(Cards));
             }
-        }
-
-        public async Task<CardImage> GetCardImageByUrlAsync(string cardImageUrl)
-        {
-            return await _cardDataFetcher.GetCardImageByUrlAsync(cardImageUrl);
         }
 
         public void CreatePDF(IEnumerable<CardWrapperViewModel> cards, string filePath)

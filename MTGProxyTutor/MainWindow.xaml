@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:local="clr-namespace:MTGProxyTutor"
         mc:Ignorable="d"
-        Title="MTGProxyTutor" Height="500" Width="800">
+        Title="MTGProxyTutor" Height="600" Width="1000">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="7*"/>
@@ -17,9 +17,17 @@
         </Grid.RowDefinitions>
 
         <local:CardListBox x:Name="CardList" Grid.Row="0"/>
-        <Button x:Name="ParseCardsBtn" Click="ParseCards" IsEnabled="{Binding ParseCardsBtnEnabled}" Height="30" Width="50" Content="Parse" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0"></Button>
 
-        <local:CardSelectionGrid x:Name="CardSelection" Grid.Row="0" Grid.Column="1"/>
-        <Button x:Name="ExportToPDFBtn" Click="ExportToPDF" IsEnabled="{Binding ExportBtnEnabled}" Height="30" Width="100" Content="Export to PDF" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,20,0"></Button>
+        <ComboBox x:Name="TCGSelection" SelectedIndex="0" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Width="150" Height="30" Grid.Row="1"
+                  ItemsSource="{Binding Path=SelectedTCGType, Converter={local:EnumToCollectionConverter}, Mode=OneTime}"
+                  SelectedValuePath="Value"
+                  DisplayMemberPath="Key"
+                  SelectedValue="{Binding Path=SelectedTCGType}" />
+
+        <Button x:Name="ParseCardsBtn" Click="ParseCards" IsEnabled="{Binding ParseCardsBtnEnabled}" Height="30" Width="50" Content="Parse" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="20,0,0,0"></Button>
+
+        <local:CardSelectionGrid x:Name="CardSelection" Grid.Row="0" Grid.Column="1" />
+        
+        <Button x:Name="ExportToPDFBtn" Click="ExportToPDF" IsEnabled="{Binding ExportBtnEnabled}" Height="30" Width="100" Content="Export to PDF" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,20,0"></Button>
     </Grid>
 </Window>

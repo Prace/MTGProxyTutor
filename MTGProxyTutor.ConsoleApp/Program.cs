@@ -15,8 +15,8 @@ namespace MTGProxyTutor.ConsoleApp
 			// Sandbox Console App - Simple Example
 
 			var diManager = new DIManager();
-			var fetcher = diManager.Container.Resolve<ICardDataFetcher>();
-			var card = fetcher.GetCardByNameAsync("charizard").Result;
+			var fetcher = diManager.Container.Resolve<ICardDataFetcher>("Magic");
+			var card = fetcher.GetCardByNameAsync("eternal witness").Result;
 			Task.Delay(200).Wait();
 			CardImage cardImg = fetcher.GetCardImageByUrlAsync(card.SelectedPrint.ImageUrls.First()).Result;
 			Console.ReadKey();

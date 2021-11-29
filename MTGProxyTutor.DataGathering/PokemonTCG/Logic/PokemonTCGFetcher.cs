@@ -2,15 +2,13 @@
 using MTGProxyTutor.Contracts.Interfaces;
 using MTGProxyTutor.Contracts.Models.App;
 using MTGProxyTutor.Contracts.Models.Pokemon;
-using MTGProxyTutor.PokemonTCG.Models;
-using System;
+using MTGProxyTutor.DataGathering.PokemonTCG.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace MTGProxyTutor.PokemonTCG.Logic
+namespace MTGProxyTutor.DataGathering.PokemonTCG.Logic
 {
     public class PokemonTCGFetcher : ICardDataFetcher
     {

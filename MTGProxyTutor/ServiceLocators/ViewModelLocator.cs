@@ -23,6 +23,5 @@ namespace MTGProxyTutor
                 throw;
             }
         }
-
     }
 }
