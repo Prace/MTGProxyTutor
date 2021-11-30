@@ -60,6 +60,7 @@ namespace MTGProxyTutor
             }
 
 			NotifyFailedFetchedCards(failedFetch);
+			UpdateTotalInfo();
 		}
 
 		private async void ExportToPDF(object sender, RoutedEventArgs e)
