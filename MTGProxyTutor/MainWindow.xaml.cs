@@ -148,8 +148,7 @@ namespace MTGProxyTutor
 		{
 			if (CardSelection.VM.Cards != null)
             {
-				_vm.TotalCardsToPrint = CardSelection.VM.Cards.Where(c => c.IsSelected).Sum(c => c.Quantity);
-				_vm.TotalSheetsToPrint = (int)Math.Ceiling(_vm.TotalCardsToPrint / 9.0);
+				_vm.TotalCardsToPrint = CardSelection.VM.Cards.Where(c => c.IsSelected).Sum(c => c.NumCardImages * c.Quantity);
 			}
 		}
 

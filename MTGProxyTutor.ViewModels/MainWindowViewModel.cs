@@ -1,5 +1,6 @@
 ﻿using MTGProxyTutor.Contracts.Interfaces;
 using MTGProxyTutor.Contracts.Models.App;
+using System;
 using System.Threading.Tasks;
 
 namespace MTGProxyTutor.ViewModels
@@ -28,6 +29,7 @@ namespace MTGProxyTutor.ViewModels
             set
             {
                 totalCardsToPrint = value;
+                TotalSheetsToPrint = calcSheetsToPrint(value);
                 OnPropertyChanged(nameof(TotalCardsToPrint));
             }
         }
@@ -63,6 +65,11 @@ namespace MTGProxyTutor.ViewModels
                 exportBtnEnabled = value;
                 OnPropertyChanged(nameof(ExportBtnEnabled));
             }
+        }
+
+        private int calcSheetsToPrint(int numberOfCardFaces)
+        {
+            return (int)Math.Ceiling(numberOfCardFaces / 9.0);
         }
     }
 }

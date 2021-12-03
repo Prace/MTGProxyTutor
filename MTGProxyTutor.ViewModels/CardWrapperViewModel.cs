@@ -69,9 +69,18 @@ namespace MTGProxyTutor.ViewModels
             }
         }
 
+        public int NumCardImages
+        {
+            get 
+            {
+                return this.Card.SelectedPrint.ImageUrls.Count;
+            }
+        }
+
         private void selectedPrintChangedHandler()
         {
             this.OnPropertyChanged(nameof(Card));
+            this.OnPropertyChanged(nameof(NumCardImages));
         }
     }
 }

@@ -33,7 +33,7 @@
         <local:CardSelectionGrid x:Name="CardSelection" Grid.Row="0" Grid.Column="1" />
 
         <DockPanel Grid.Column="1" Grid.Row="1" Margin="20">
-            <Label x:Name="TotalCardsLabel" Content="Total Cards:" VerticalAlignment="Center" />
+            <Label x:Name="TotalCardsLabel" Content="Total Card Faces:" VerticalAlignment="Center" />
             <TextBlock x:Name="TotalCardsNumber" Text="{Binding TotalCardsToPrint}" VerticalAlignment="Center" FontWeight="Bold" />
 
             <Label x:Name="TotalSheetsLabel" Content="Total Sheets:" VerticalAlignment="Center" />
