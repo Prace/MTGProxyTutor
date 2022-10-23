@@ -131,11 +131,21 @@ namespace MTGProxyTutor
 			return await CardDataFetcherLocator.Instance.GetCardByNameAsync(cardName);
 		}
 
-		private async Task<CardWrapperViewModel> GetCard(ParsedCard parsedCard)
+        private async Task<Card> GetCardBySetAndNumberAsync(string set, string number)
+        {
+            return await CardDataFetcherLocator.Instance.GetCardBySetAndNumber(set, number);
+        }
+
+        private async Task<CardWrapperViewModel> GetCard(ParsedCard parsedCard)
 		{
 			await Task.Delay(200);
-			var cardData = await GetCardByNameAsync(parsedCard.CardName);
-			var cardWrapper = new CardWrapperViewModel(cardData, parsedCard.Quantity);
+			Card cardData;
+			if(parsedCard.IsSetAndNumberFormat)
+				cardData = await GetCardBySetAndNumberAsync(parsedCard.Set,	parsedCard.Number);
+			else
+                cardData = await GetCardByNameAsync(parsedCard.CardName);
+
+            var cardWrapper = new CardWrapperViewModel(cardData, parsedCard.Quantity);
 			return cardWrapper;
 		}
 

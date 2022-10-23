@@ -3,6 +3,7 @@ using MTGProxyTutor.Contracts.Interfaces;
 using MTGProxyTutor.Contracts.Models.App;
 using MTGProxyTutor.Contracts.Models.Pokemon;
 using MTGProxyTutor.DataGathering.PokemonTCG.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -35,6 +36,9 @@ namespace MTGProxyTutor.DataGathering.PokemonTCG.Logic
 
             return null;
         }
+
+        public Task<Card> GetCardBySetAndNumber(string set, string number) =>
+            throw new NotImplementedException();
 
         public async Task<CardImage> GetCardImageByUrlAsync(string url)
         {
