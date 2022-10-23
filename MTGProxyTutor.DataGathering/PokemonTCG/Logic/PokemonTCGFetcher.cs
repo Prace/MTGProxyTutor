@@ -68,7 +68,9 @@ namespace MTGProxyTutor.DataGathering.PokemonTCG.Logic
         private Card mapResultDataToCard(PokemonTCGSearchResult resultData)
         {
             var card = new PokemonCard();
-            card.CardName = resultData.data.First().name;
+            var firstPrint = resultData.data.First();
+            card.CardName = firstPrint.name;
+            card.CardId = firstPrint.id;
             card.Printings = resultData.data.Select(c =>
             {
                 var printing = new PokemonCardPrint();

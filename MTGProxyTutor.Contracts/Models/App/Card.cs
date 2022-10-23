@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 
 namespace MTGProxyTutor.Contracts.Models.App
 {
@@ -9,6 +10,7 @@ namespace MTGProxyTutor.Contracts.Models.App
 		public event Action OnSelectedPrintChanged;
 
 		public string CardName { get; set; }
+		public string CardId { get; set; }
 		public List<CardPrint> Printings { get; set; }
 
 		private CardPrint selectedPrint;

@@ -44,7 +44,7 @@ namespace MTGProxyTutor
 				{
 					var cardWrapper = await GetCard(pc);
 					AddOrUpdateCard(cardWrapper);
-					updatedCards.Add(cardWrapper.Card.CardName);
+					updatedCards.Add(cardWrapper.Card.CardId);
 				}
 				catch
 				{
@@ -52,7 +52,7 @@ namespace MTGProxyTutor
 				}
 			}
 
-			var cardsToRemove = CardSelection.VM.Cards.Where(c => !updatedCards.Contains(c.Card.CardName));
+			var cardsToRemove = CardSelection.VM.Cards.Where(c => !updatedCards.Contains(c.Card.CardId));
 
 			foreach (var rc in cardsToRemove.ToList())
             {
@@ -114,7 +114,7 @@ namespace MTGProxyTutor
 
 		private void AddOrUpdateCard(CardWrapperViewModel cardWrapper)
         {
-			var match = CardSelection.VM.Cards.FirstOrDefault(c => cardWrapper.Card.CardName == c.Card.CardName);
+			var match = CardSelection.VM.Cards.FirstOrDefault(c => cardWrapper.Card.CardId == c.Card.CardId);
 
 			if (match != null)
 			{
