@@ -44,7 +44,7 @@ namespace MTGProxyTutor
 				{
 					var cardWrapper = await GetCard(pc);
 					AddOrUpdateCard(cardWrapper);
-					updatedCards.Add(cardWrapper.Card.CardName);
+					updatedCards.Add(cardWrapper.Card.CardId);
 				}
 				catch
 				{
@@ -52,7 +52,7 @@ namespace MTGProxyTutor
 				}
 			}
 
-			var cardsToRemove = CardSelection.VM.Cards.Where(c => !updatedCards.Contains(c.Card.CardName));
+			var cardsToRemove = CardSelection.VM.Cards.Where(c => !updatedCards.Contains(c.Card.CardId));
 
 			foreach (var rc in cardsToRemove.ToList())
             {
@@ -114,7 +114,7 @@ namespace MTGProxyTutor
 
 		private void AddOrUpdateCard(CardWrapperViewModel cardWrapper)
         {
-			var match = CardSelection.VM.Cards.FirstOrDefault(c => cardWrapper.Card.CardName == c.Card.CardName);
+			var match = CardSelection.VM.Cards.FirstOrDefault(c => cardWrapper.Card.CardId == c.Card.CardId);
 
 			if (match != null)
 			{
@@ -131,11 +131,21 @@ namespace MTGProxyTutor
 			return await CardDataFetcherLocator.Instance.GetCardByNameAsync(cardName);
 		}
 
-		private async Task<CardWrapperViewModel> GetCard(ParsedCard parsedCard)
+        private async Task<Card> GetCardBySetAndNumberAsync(string set, string number)
+        {
+            return await CardDataFetcherLocator.Instance.GetCardBySetAndNumber(set, number);
+        }
+
+        private async Task<CardWrapperViewModel> GetCard(ParsedCard parsedCard)
 		{
 			await Task.Delay(200);
-			var cardData = await GetCardByNameAsync(parsedCard.CardName);
-			var cardWrapper = new CardWrapperViewModel(cardData, parsedCard.Quantity);
+			Card cardData;
+			if(parsedCard.IsSetAndNumberFormat)
+				cardData = await GetCardBySetAndNumberAsync(parsedCard.Set,	parsedCard.Number);
+			else
+                cardData = await GetCardByNameAsync(parsedCard.CardName);
+
+            var cardWrapper = new CardWrapperViewModel(cardData, parsedCard.Quantity);
 			return cardWrapper;
 		}
 

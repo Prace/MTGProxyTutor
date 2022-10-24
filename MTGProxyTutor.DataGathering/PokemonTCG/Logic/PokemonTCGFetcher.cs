@@ -3,6 +3,7 @@ using MTGProxyTutor.Contracts.Interfaces;
 using MTGProxyTutor.Contracts.Models.App;
 using MTGProxyTutor.Contracts.Models.Pokemon;
 using MTGProxyTutor.DataGathering.PokemonTCG.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -36,6 +37,9 @@ namespace MTGProxyTutor.DataGathering.PokemonTCG.Logic
             return null;
         }
 
+        public Task<Card> GetCardBySetAndNumber(string set, string number) =>
+            throw new NotImplementedException();
+
         public async Task<CardImage> GetCardImageByUrlAsync(string url)
         {
             if (url == null)
@@ -64,7 +68,9 @@ namespace MTGProxyTutor.DataGathering.PokemonTCG.Logic
         private Card mapResultDataToCard(PokemonTCGSearchResult resultData)
         {
             var card = new PokemonCard();
-            card.CardName = resultData.data.First().name;
+            var firstPrint = resultData.data.First();
+            card.CardName = firstPrint.name;
+            card.CardId = firstPrint.id;
             card.Printings = resultData.data.Select(c =>
             {
                 var printing = new PokemonCardPrint();

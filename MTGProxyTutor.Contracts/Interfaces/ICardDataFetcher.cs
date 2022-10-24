@@ -7,6 +7,7 @@ namespace MTGProxyTutor.Contracts.Interfaces
 	public interface ICardDataFetcher
 	{
 		Task<Card> GetCardByNameAsync(string cardName);
-		Task<CardImage> GetCardImageByUrlAsync(string url);
-	}
+        Task<Card> GetCardBySetAndNumber(string set, string number);
+        Task<CardImage> GetCardImageByUrlAsync(string url);
+    }
 }

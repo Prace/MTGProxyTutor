@@ -39,9 +39,9 @@ namespace MTGProxyTutor.ViewModels
             _pdfManager.CreatePDF(selectedCards, filePath);
         }
 
-        public void RemoveCard(string cardName)
+        public void RemoveCard(string id)
         {
-            var toRemove = this.Cards.Where(c => c.Card.CardName == cardName);
+            var toRemove = this.Cards.Where(c => c.Card.CardId == id);
             foreach (var c in toRemove)
             {
                 this.Cards.Remove(c);

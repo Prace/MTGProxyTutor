@@ -11,13 +11,34 @@ namespace MTGProxyTutor.BusinessLogic.Parsers
 		protected ParsedCard ParseSingleLine(string line)
 		{
 			var lineWithQtyMatch = lineWithQtyParseRegex.Match(line);
+            int qty = 1;
+            string cardData;
+            ParsedCard parsedCard = null;
+            if (lineWithQtyMatch.Success)
+            {
+                qty = Int32.Parse(lineWithQtyMatch.Groups[1].Value);
+                cardData = lineWithQtyMatch.Groups[2].Value;
+            }
+            else if (!string.IsNullOrWhiteSpace(line))
+                cardData = line.Trim();
+            else
+                return null;
 
-			if (lineWithQtyMatch.Success)
-				return new ParsedCard(Int32.Parse(lineWithQtyMatch.Groups[1].Value), lineWithQtyMatch.Groups[2].Value);
-			else if (!string.IsNullOrWhiteSpace(line))
-				return new ParsedCard(1, line.Trim());
-			else
-				return null;
-		}
+            if (cardData.StartsWith("#"))
+            {
+                //format : "#set:number"
+                try
+                {
+                    var searchElements = cardData.Split(new char[] { '#', ':' });
+                    var set = searchElements[1];
+                    var number = searchElements[2];
+                    parsedCard = new ParsedCard(qty, set, number);
+                }
+                catch { };
+            }
+            else
+                parsedCard = new ParsedCard(qty, cardData);
+            return parsedCard;
+        }
 	}
 }
