@@ -35,8 +35,8 @@ namespace MTGProxyTutor.DataGathering.Scryfall.Logic
 
             var card = _mapper.Map<MagicCard>(cardDetails);
             await Task.Delay(CALL_WAIT_TIME_MS);
-            var printings = await _webApiConsumer.GetAsync<ScryfallCardPrintings>(cardDetails.Prints_search_uri);
-            card.Printings = printings.Data.Select(print => _mapper.Map<MagicCardPrint>(print) as CardPrint).ToList();
+            var cardPrint = _mapper.Map<MagicCardPrint>(cardDetails) as CardPrint;
+            card.Printings = new System.Collections.Generic.List<CardPrint>() { cardPrint };
             return card;
         }
 
